@@ -1,12 +1,27 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { Link } from "react-router-dom";
 import Marquee from "react-fast-marquee";
 import BlogCard from "../components/BlogCard";
 import ProductCard from "../components/ProductCard";
 import SpecialProduct from "../components/SpecialProduct";
 import Container from "../components/Container";
+import {getPromotions} from "../service/promotions/promotionsService";
+import {getArticles} from "../service/Articles/articlesServices";
 
 const Home = () => {
+
+  const [promotions, setPromotions] = useState([])
+  const [articles, setArticles] = useState([])
+
+  useEffect(() => {
+        if(!promotions) getPromotions().then(
+            res => setPromotions(res.data)
+        )
+    if(!articles) getArticles().then(
+        res => setArticles(res.data.slice(0, 10))
+    )
+  },[promotions, articles])
+
   return (
     <>
       <Container class1="home-wrapper-1 py-5">
@@ -35,8 +50,10 @@ const Home = () => {
                   alt="main banner"
                 />
                 <div className="small-banner-content position-absolute">
-                  <h4>Best Sake</h4>
-                  <h5>iPad S13+ Pro.</h5>
+                  {/*<h4>Best Sake</h4>*/}
+                  <h4>{promotions[0]?.title}</h4>
+                  {/*<h5>iPad S13+ Pro.</h5>*/}
+                  <h5>{promotions[0]?.products}</h5>
                   <p>
                     From $999.00 <br /> or $41.62/mo.
                   </p>
@@ -92,62 +109,73 @@ const Home = () => {
         <div className="row">
           <div className="col-12">
             <div className="categories d-flex justify-content-between flex-wrap align-items-center">
-              <div className="d-flex gap align-items-center">
-                <div>
-                  <h6>Music & Gaming</h6>
-                  <p>10 Items</p>
-                </div>
-                <img src="images/camera.jpg" alt="camera" />
-              </div>
-              <div className="d-flex gap align-items-center">
-                <div>
-                  <h6>Cameras</h6>
-                  <p>10 Items</p>
-                </div>
-                <img src="images/camera.jpg" alt="camera" />
-              </div>
-              <div className="d-flex gap align-items-center">
-                <div>
-                  <h6>Smart Tv</h6>
-                  <p>10 Items</p>
-                </div>
-                <img src="images/tv.jpg" alt="camera" />
-              </div>
-              <div className="d-flex gap align-items-center">
-                <div>
-                  <h6>Smart Watches</h6>
-                  <p>10 Items</p>
-                </div>
-                <img src="images/headphone.jpg" alt="camera" />
-              </div>
-              <div className="d-flex gap align-items-center">
-                <div>
-                  <h6>Music & Gaming</h6>
-                  <p>10 Items</p>
-                </div>
-                <img src="images/camera.jpg" alt="camera" />
-              </div>
-              <div className="d-flex gap align-items-center">
-                <div>
-                  <h6>Cameras</h6>
-                  <p>10 Items</p>
-                </div>
-                <img src="images/camera.jpg" alt="camera" />
-              </div>
-              <div className="d-flex gap align-items-center">
-                <div>
-                  <h6>Smart Tv</h6>
-                  <p>10 Items</p>
-                </div>
-                <img src="images/tv.jpg" alt="camera" />
-              </div>
-              <div className="d-flex gap align-items-center">
-                <div>
-                  <h6>Smart Watches</h6>
-                  <p>10 Items</p>
-                </div>
-                <img src="images/headphone.jpg" alt="camera" />
-              </div>
+              {articles.map((article) => {
+                  return (
+                      <div className="d-flex gap align-items-center">
+                        <div>
+                          <h6>{article.name}</h6>
+                          <p>`${article.quantity} Items`</p>
+                        </div>
+                        <img src={article.image} alt={article.description}/>
+                      </div>
+                  )
+              })}
+              {/*<div className="d-flex gap align-items-center">*/}
+              {/*  <div>*/}
+              {/*    <h6>Music & Gaming</h6>*/}
+              {/*    <p>10 Items</p>*/}
+              {/*  </div>*/}
+              {/*  <img src="images/camera.jpg" alt="camera" />*/}
+              {/*</div>*/}
+              {/*<div className="d-flex gap align-items-center">*/}
+              {/*  <div>*/}
+              {/*    <h6>Cameras</h6>*/}
+              {/*    <p>10 Items</p>*/}
+              {/*  </div>*/}
+              {/*  <img src="images/camera.jpg" alt="camera" />*/}
+              {/*</div>*/}
+              {/*<div className="d-flex gap align-items-center">*/}
+              {/*  <div>*/}
+              {/*    <h6>Smart Tv</h6>*/}
+              {/*    <p>10 Items</p>*/}
+              {/*  </div>*/}
+              {/*  <img src="images/tv.jpg" alt="camera" />*/}
+              {/*</div>*/}
+              {/*<div className="d-flex gap align-items-center">*/}
+              {/*  <div>*/}
+              {/*    <h6>Smart Watches</h6>*/}
+              {/*    <p>10 Items</p>*/}
+              {/*  </div>*/}
+              {/*  <img src="images/headphone.jpg" alt="camera" />*/}
+              {/*</div>*/}
+              {/*<div className="d-flex gap align-items-center">*/}
+              {/*  <div>*/}
+              {/*    <h6>Music & Gaming</h6>*/}
+              {/*    <p>10 Items</p>*/}
+              {/*  </div>*/}
+              {/*  <img src="images/camera.jpg" alt="camera" />*/}
+              {/*</div>*/}
+              {/*<div className="d-flex gap align-items-center">*/}
+              {/*  <div>*/}
+              {/*    <h6>Cameras</h6>*/}
+              {/*    <p>10 Items</p>*/}
+              {/*  </div>*/}
+              {/*  <img src="images/camera.jpg" alt="camera" />*/}
+              {/*</div>*/}
+              {/*<div className="d-flex gap align-items-center">*/}
+              {/*  <div>*/}
+              {/*    <h6>Smart Tv</h6>*/}
+              {/*    <p>10 Items</p>*/}
+              {/*  </div>*/}
+              {/*  <img src="images/tv.jpg" alt="camera" />*/}
+              {/*</div>*/}
+              {/*<div className="d-flex gap align-items-center">*/}
+              {/*  <div>*/}
+              {/*    <h6>Smart Watches</h6>*/}
+              {/*    <p>10 Items</p>*/}
+              {/*  </div>*/}
+              {/*  <img src="images/headphone.jpg" alt="camera" />*/}
+              {/*</div>*/}
             </div>
           </div>
         </div>

@@ -1,4 +1,4 @@
-import fetch from '../../config/interceptor'
+import fetch from '../../config/interceptor/interceptor'
 import { BaseUrl, APIS} from "../../config/constant/URLS";
 
 
@@ -31,9 +31,9 @@ export const deletePromotion = (id) => {
     })
 }
 
-/*export const getPromotions = () => {
+export const getPromotions = () => {
     return fetch({
         method: "get",
         url: BaseUrl + APIS.PUBLIC
     })
-}*/
+}
