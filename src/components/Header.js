@@ -14,6 +14,7 @@ const Header = () => {
   const userData = JSON.parse(localStorage.getItem('user'));
   const navigate = useNavigate()
   const location = useLocation();
+  const [categories, setCategories] = useState([]);
   const handleLogout = () => {
     localStorage.clear()
     navigate('/login');
@@ -48,15 +49,15 @@ const Header = () => {
             <div className="col-5">
               {/*<div className="input-group">*/}
               {/*  <input*/}
-                  type="text"
-                  className="form-control py-2"
-                  placeholder="Search Product Here..."
-                  aria-label="Search Product Here..."
-                  aria-describedby="basic-addon2"
-                />
-                {/*<span className="input-group-text p-3" id="basic-addon2">*/}
-                {/*   <BsSearch className="fs-6" />*/}
-                {/*</span>*/}
+              {/*    type="text"*/}
+              {/*    className="form-control py-2"*/}
+              {/*    placeholder="Search Product Here..."*/}
+              {/*    aria-label="Search Product Here..."*/}
+              {/*    aria-describedby="basic-addon2"*/}
+              {/*  />*/}
+              {/*  <span className="input-group-text p-3" id="basic-addon2">*/}
+              {/*     <BsSearch className="fs-6" />*/}
+              {/*  </span>*/}
               {/*</div>*/}
             </div>
             <div className="col-5">
@@ -131,27 +132,35 @@ const Header = () => {
                         Shop Categories
                       </span>
                         </button>
-
                         {/*categories*/}
                         <ul
                             className="dropdown-menu"
                             aria-labelledby="dropdownMenuButton1"
                         >
-                          <li>
-                            <Link className="dropdown-item text-white" to="">
-                              Action
-                            </Link>
-                          </li>
-                          <li>
-                            <Link className="dropdown-item text-white" to="">
-                              Another action
-                            </Link>
-                          </li>
-                          <li>
-                            <Link className="dropdown-item text-white" to="">
-                              Something else here
-                            </Link>
-                          </li>
+                          { categories.map((cat) => {
+                            return (
+                                <li>
+                                  <link className="dropdown-item text-white" to="">
+                                    {cat.name}
+                                  </link>
+                                </li>
+                            )
+                          })}
+                          {/*<li>*/}
+                          {/*  <Link className="dropdown-item text-white" to="">*/}
+                          {/*    Action*/}
+                          {/*  </Link>*/}
+                          {/*</li>*/}
+                          {/*<li>*/}
+                          {/*  <Link className="dropdown-item text-white" to="">*/}
+                          {/*    Another action*/}
+                          {/*  </Link>*/}
+                          {/*</li>*/}
+                          {/*<li>*/}
+                          {/*  <Link className="dropdown-item text-white" to="">*/}
+                          {/*    Something else here*/}
+                          {/*  </Link>*/}
+                          {/*</li>*/}
                         </ul>
                       </div>
                     </div>

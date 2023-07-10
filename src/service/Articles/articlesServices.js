@@ -1,7 +1,7 @@
 import {APIS, BaseUrl} from "../../config/constant/URLS";
 import fetch from '../../config/interceptor/interceptor'
 
-export const getArticles = ()=>{
+export const getArticles = () => {
     return fetch({
         method: "get",
         url: BaseUrl+ APIS.ARTICLES.getArticle,
@@ -14,10 +14,23 @@ export const AddArticles = (data)=>{
         data
     })
 }
-export const AddArticles = (id)=>{
+export const getArticleById = (id)=>{
     return fetch({
         method: "get",
         url: BaseUrl+ APIS.ARTICLES.getById(id),
-        data
+    })
+}
+
+export const getArticlesPublic = () => {
+    return fetch({
+        method: 'get',
+        url: BaseUrl + APIS.PUBLIC.articlesList
+    })
+}
+
+export const getArticlesDetails = (id) => {
+    return fetch({
+        method: 'get',
+        url: BaseUrl + APIS.PUBLIC.articlesDetails(id)
     })
 }
