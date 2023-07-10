@@ -6,7 +6,7 @@ import ProductCard from "../components/ProductCard";
 import SpecialProduct from "../components/SpecialProduct";
 import Container from "../components/Container";
 import {getPromotions} from "../service/promotions/promotionsService";
-import {getArticles} from "../service/Articles/articlesServices";
+import {getArticlesPublic} from "../service/Articles/articlesServices";
 
 const Home = () => {
 
@@ -17,10 +17,14 @@ const Home = () => {
         if(!promotions) getPromotions().then(
             res => setPromotions(res.data)
         )
-    if(!articles) getArticles().then(
-        res => setArticles(res.data.slice(0, 10))
+    getArticlesPublic().then(
+    res => {
+      console.log(res)
+      setArticles(res.data.slice(0, 10))
+
+    }
     )
-  },[promotions, articles])
+  },[])
 
   return (
     <>
@@ -116,7 +120,7 @@ const Home = () => {
                           <h6>{article.name}</h6>
                           <p>`${article.quantity} Items`</p>
                         </div>
-                        <img src={article.image} alt={article.description}/>
+                        <img src={article?.medias[0]?.url} alt={article.description} width={110} height={110} />
                       </div>
                   )
               })}
@@ -264,10 +268,11 @@ const Home = () => {
           </div>
         </div>
         <div className="row">
-          <SpecialProduct />
-          <SpecialProduct />
-          <SpecialProduct />
-          <SpecialProduct />
+          {articles.map((item)=>{
+            return (
+                <SpecialProduct specials={item}  />
+            )
+          })}
         </div>
       </Container>
       <Container class1="popular-wrapper py-5 home-wrapper-2">

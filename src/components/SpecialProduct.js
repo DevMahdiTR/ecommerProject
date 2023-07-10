@@ -3,19 +3,19 @@ import ReactStars from "react-rating-stars-component";
 import { Link } from "react-router-dom";
 const SpecialProduct = (props) => {
 
-  const {brand, title, desc, price, initialPrice} = props?.specials;
+  const {name, status, description, price,quantity} = props?.specials;
   return (
     <>
       <div className="col-6 mb-3">
         <div className="special-product-card">
-          <div className="d-flex justify-content-between">
+          <div className="d-flex ">
             <div>
               <img src="images/watch.jpg" className="img-fluid" alt="watch" />
             </div>
             <div className="special-product-content">
-              <h5 className="brand">{brand}</h5>
+              <h5 className="brand">{name}</h5>
               <h6 className="title">
-                {desc}
+                {description}
                 {/*Samsung Galaxy Note10+ Mobile Phone; Sim...*/}
               </h6>
               <ReactStars
@@ -26,7 +26,7 @@ const SpecialProduct = (props) => {
                 activeColor="#ffd700"
               />
               <p className="price">
-                <span className="red-p">${price}</span> &nbsp; <strike>${initialPrice}</strike>
+                <span className="red-p">{price} DT</span> &nbsp; <span>{status}</span>
               </p>
               {/*<div className="discount-till d-flex align-items-center gap-10">*/}
               {/*  <p className="mb-0">*/}
@@ -39,17 +39,7 @@ const SpecialProduct = (props) => {
               {/*  </div>*/}
               {/*</div>*/}
               <div className="prod-count my-3">
-                <p>Products: 5</p>
-                <div className="progress">
-                  <div
-                    className="progress-bar"
-                    role="progressbar"
-                    style={{ width: "25%" }}
-                    aria-valuenow="25"
-                    aria-valuemin="0"
-                    aria-valuemax="100"
-                  ></div>
-                </div>
+                <p>Products: {quantity}</p>
               </div>
               <Link className="button">Add to Cart</Link>
             </div>
