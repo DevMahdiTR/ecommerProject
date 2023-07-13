@@ -92,7 +92,7 @@ a {
   font-size: 14px;
   line-height: 18px;
   font-weight: 400;
-  letter-spacing: 0.3;
+  letter-spacing: 0.3em;
   text-transform: uppercase;
 }
 
@@ -156,7 +156,7 @@ footer .input-group-text {
 .main-banner-content p {
   font-size: 18px;
   line-height: 28px;
-  letter-spacing: 0.4;
+  letter-spacing: 0.4em;
   color: var(--color-131921);
 }
 .small-banner-content {
@@ -183,7 +183,7 @@ footer .input-group-text {
 .small-banner-content p {
   font-size: 14px;
   line-height: 22px;
-  letter-spacing: 0.4;
+  letter-spacing: 0.4em;
   color: var(--color-131921);
 }
 .small-banner {
@@ -355,7 +355,7 @@ footer .input-group-text {
 .famous-content h5 {
   font-size: 13px;
   line-height: 20px;
-  font-weight: 400px;
+  font-weight: 400;
   color: white;
   margin-bottom: 7px;
   text-transform: uppercase;
@@ -540,7 +540,7 @@ footer .input-group-text {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 0px;
+  padding: 10px 0;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 /* Compare Product Page end here */
@@ -697,12 +697,12 @@ footer .input-group-text {
 .product-heading {
   font-size: 14px;
   color: var(--color-1c1c1b);
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 .product-data {
   font-size: 13px;
   columns: var(--color-777777);
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 .main-product-details a {
   font-size: 14px;

@@ -10,7 +10,7 @@ const { Header, Sider, Content } = Layout;
 
 
 const Setting = () => {
-    const navigate  = useNavigate()
+    // const navigate  = useNavigate()
     const [collapsed, setCollapsed] = useState(false);
     const {
         token: { colorBgContainer },
