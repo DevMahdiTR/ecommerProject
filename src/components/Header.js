@@ -1,15 +1,12 @@
 import React, {useEffect, useState} from "react";
 import {NavLink, Link, useNavigate, useLocation} from "react-router-dom";
-import { BsSearch } from "react-icons/bs";
-import compare from "../images/compare.svg";
+
 import wishlist from "../images/wishlist.svg";
 import user from "../images/user.svg";
 import cart from "../images/cart.svg";
 import menu from "../images/menu.svg";
 import setting from "../images/setting.svg";
-import {logout} from "../service/login/AuthService";
-import contact from "../pages/Contact";
-import {getCategories, getPublicCategories} from "../service/categories/categoriesService";
+import { getPublicCategories} from "../service/categories/categoriesService";
 const Header = () => {
   const token = localStorage.getItem('token');
   const userData = JSON.parse(localStorage.getItem('user'));
@@ -50,7 +47,7 @@ const Header = () => {
           <div className="row align-items-center">
             <div className="col-2">
               <h2>
-                <Link className="text-white">Dev Corner</Link>
+                <h1 className="text-white">Dev Corner</h1>
               </h2>
             </div>
             <div className="col-5">

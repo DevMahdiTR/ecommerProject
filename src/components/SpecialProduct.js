@@ -41,7 +41,7 @@ const SpecialProduct = (props) => {
               <div className="prod-count my-3">
                 <p>Products: {quantity}</p>
               </div>
-              <Link className="button">Add to Cart</Link>
+              <Link className="button" to="">Add to Cart</Link>
             </div>
           </div>
         </div>

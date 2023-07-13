@@ -26,13 +26,13 @@ const Wishlist = () => {
                 <div className="col-3" key={index}>
                   <div className="wishlist-card position-relative">
                     <img
-                        src="images/cross.svg"
+                        src="../images/cross.svg"
                         alt="cross"
                         className="position-absolute cross img-fluid"
                     />
                     <div className="wishlist-card-image">
                       <img
-                          src="images/watch.jpg"
+                          src="../images/watch.jpg"
                           className="img-fluid w-100"
                           alt="watch"
                       />

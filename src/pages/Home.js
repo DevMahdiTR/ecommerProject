@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import { Link } from "react-router-dom";
 import Marquee from "react-fast-marquee";
-import BlogCard from "../components/BlogCard";
 import ProductCard from "../components/ProductCard";
 import SpecialProduct from "../components/SpecialProduct";
 import Container from "../components/Container";
@@ -30,7 +29,7 @@ const Home = () => {
           <div className="col-6">
             <div className="main-banner position-relative">
               <img
-                src="images/main-banner-1.jpg"
+                src="../images/main-banner-1.jpg"
                 className="img-fluid rounded-3"
                 alt="main banner"
               />
@@ -38,7 +37,7 @@ const Home = () => {
                 <h4>SUPERCHARGED FOR PROS.</h4>
                 <h5>iPad S13+ Pro.</h5>
                 <p>From $999.00 or $41.62/mo.</p>
-                <Link className="button">BUY NOW</Link>
+                <Link className="button" to="">BUY NOW</Link>
               </div>
             </div>
           </div>
@@ -46,7 +45,7 @@ const Home = () => {
             <div className="d-flex flex-wrap gap-10 justify-content-between align-items-center">
               <div className="small-banner position-relative">
                 <img
-                  src="images/catbanner-01.jpg"
+                  src="../images/catbanner-01.jpg"
                   className="img-fluid rounded-3"
                   alt="main banner"
                 />
@@ -62,7 +61,7 @@ const Home = () => {
               </div>
               <div className="small-banner position-relative">
                 <img
-                  src="images/catbanner-02.jpg"
+                  src="../images/catbanner-02.jpg"
                   className="img-fluid rounded-3"
                   alt="main banner"
                 />
@@ -76,7 +75,7 @@ const Home = () => {
               </div>
               <div className="small-banner position-relative ">
                 <img
-                  src="images/catbanner-03.jpg"
+                  src="../images/catbanner-03.jpg"
                   className="img-fluid rounded-3"
                   alt="main banner"
                 />
@@ -90,7 +89,7 @@ const Home = () => {
               </div>
               <div className="small-banner position-relative ">
                 <img
-                  src="images/catbanner-04.jpg"
+                  src="../images/catbanner-04.jpg"
                   className="img-fluid rounded-3"
                   alt="main banner"
                 />
@@ -144,7 +143,7 @@ const Home = () => {
           <div className="col-3">
             <div className="famous-card position-relative">
               <img
-                src="images/famous-1.webp"
+                src="../images/famous-1.webp"
                 className="img-fluid"
                 alt="famous"
               />
@@ -158,7 +157,7 @@ const Home = () => {
           <div className="col-3">
             <div className="famous-card position-relative">
               <img
-                src="images/famous-2.webp"
+                src="../images/famous-2.webp"
                 className="img-fluid"
                 alt="famous"
               />
@@ -172,7 +171,7 @@ const Home = () => {
           <div className="col-3">
             <div className="famous-card position-relative">
               <img
-                src="images/famous-3.webp"
+                src="../images/famous-3.webp"
                 className="img-fluid"
                 alt="famous"
               />
@@ -188,7 +187,7 @@ const Home = () => {
           <div className="col-3">
             <div className="famous-card position-relative">
               <img
-                src="images/famous-3.webp"
+                src="../images/famous-3.webp"
                 className="img-fluid"
                 alt="famous"
               />
@@ -237,28 +236,28 @@ const Home = () => {
             <div className="marquee-inner-wrapper card-wrapper">
               <Marquee className="d-flex">
                 <div className="mx-4 w-25">
-                  <img src="images/brand-01.png" alt="brand" />
+                  <img src="../images/brand-01.png" alt="brand" />
                 </div>
                 <div className="mx-4 w-25">
-                  <img src="images/brand-02.png" alt="brand" />
+                  <img src="../images/brand-02.png" alt="brand" />
                 </div>
                 <div className="mx-4 w-25">
-                  <img src="images/brand-03.png" alt="brand" />
+                  <img src="../images/brand-03.png" alt="brand" />
                 </div>
                 <div className="mx-4 w-25">
-                  <img src="images/brand-04.png" alt="brand" />
+                  <img src="../images/brand-04.png" alt="brand" />
                 </div>
                 <div className="mx-4 w-25">
-                  <img src="images/brand-05.png" alt="brand" />
+                  <img src="../images/brand-05.png" alt="brand" />
                 </div>
                 <div className="mx-4 w-25">
-                  <img src="images/brand-06.png" alt="brand" />
+                  <img src="../images/brand-06.png" alt="brand" />
                 </div>
                 <div className="mx-4 w-25">
-                  <img src="images/brand-07.png" alt="brand" />
+                  <img src="../images/brand-07.png" alt="brand" />
                 </div>
                 <div className="mx-4 w-25">
-                  <img src="images/brand-08.png" alt="brand" />
+                  <img src="../images/brand-08.png" alt="brand" />
                 </div>
               </Marquee>
             </div>
