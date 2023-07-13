@@ -19,11 +19,8 @@ const Home = () => {
         )
     getArticlesPublic().then(
     res => {
-      console.log(res)
       setArticles(res.data.slice(0, 10))
-
-    }
-    )
+    })
   },[])
 
   return (
@@ -113,9 +110,9 @@ const Home = () => {
         <div className="row">
           <div className="col-12">
             <div className="categories d-flex justify-content-between flex-wrap align-items-center">
-              {articles.map((article) => {
+              {articles.map((article, index) => {
                   return (
-                      <div className="d-flex gap align-items-center">
+                      <div className="d-flex gap align-items-center" key={index}>
                         <div>
                           <h6>{article.name}</h6>
                           <p>`${article.quantity} Items`</p>
@@ -124,62 +121,6 @@ const Home = () => {
                       </div>
                   )
               })}
-              {/*<div className="d-flex gap align-items-center">*/}
-              {/*  <div>*/}
-              {/*    <h6>Music & Gaming</h6>*/}
-              {/*    <p>10 Items</p>*/}
-              {/*  </div>*/}
-              {/*  <img src="images/camera.jpg" alt="camera" />*/}
-              {/*</div>*/}
-              {/*<div className="d-flex gap align-items-center">*/}
-              {/*  <div>*/}
-              {/*    <h6>Cameras</h6>*/}
-              {/*    <p>10 Items</p>*/}
-              {/*  </div>*/}
-              {/*  <img src="images/camera.jpg" alt="camera" />*/}
-              {/*</div>*/}
-              {/*<div className="d-flex gap align-items-center">*/}
-              {/*  <div>*/}
-              {/*    <h6>Smart Tv</h6>*/}
-              {/*    <p>10 Items</p>*/}
-              {/*  </div>*/}
-              {/*  <img src="images/tv.jpg" alt="camera" />*/}
-              {/*</div>*/}
-              {/*<div className="d-flex gap align-items-center">*/}
-              {/*  <div>*/}
-              {/*    <h6>Smart Watches</h6>*/}
-              {/*    <p>10 Items</p>*/}
-              {/*  </div>*/}
-              {/*  <img src="images/headphone.jpg" alt="camera" />*/}
-              {/*</div>*/}
-              {/*<div className="d-flex gap align-items-center">*/}
-              {/*  <div>*/}
-              {/*    <h6>Music & Gaming</h6>*/}
-              {/*    <p>10 Items</p>*/}
-              {/*  </div>*/}
-              {/*  <img src="images/camera.jpg" alt="camera" />*/}
-              {/*</div>*/}
-              {/*<div className="d-flex gap align-items-center">*/}
-              {/*  <div>*/}
-              {/*    <h6>Cameras</h6>*/}
-              {/*    <p>10 Items</p>*/}
-              {/*  </div>*/}
-              {/*  <img src="images/camera.jpg" alt="camera" />*/}
-              {/*</div>*/}
-              {/*<div className="d-flex gap align-items-center">*/}
-              {/*  <div>*/}
-              {/*    <h6>Smart Tv</h6>*/}
-              {/*    <p>10 Items</p>*/}
-              {/*  </div>*/}
-              {/*  <img src="images/tv.jpg" alt="camera" />*/}
-              {/*</div>*/}
-              {/*<div className="d-flex gap align-items-center">*/}
-              {/*  <div>*/}
-              {/*    <h6>Smart Watches</h6>*/}
-              {/*    <p>10 Items</p>*/}
-              {/*  </div>*/}
-              {/*  <img src="images/headphone.jpg" alt="camera" />*/}
-              {/*</div>*/}
             </div>
           </div>
         </div>
@@ -189,10 +130,12 @@ const Home = () => {
           <div className="col-12">
             <h3 className="section-heading">Featured Collection</h3>
           </div>
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
+          {articles?.map((article, index) => {
+            console.log("in Home:", article)
+            return (
+                <ProductCard featured={article} key={index}/>
+                )
+          })}
         </div>
       </Container>
 

@@ -36,3 +36,10 @@ export const getCategoriesByID = (data, id) => {
     })
 }
 
+export const getPublicCategories = () => {
+    return fetch({
+        method: "get",
+        url: BaseUrl+ APIS.CATEGORIES.getPublicCategories,
+    })
+}
+

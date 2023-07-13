@@ -81,6 +81,11 @@ a {
   width: 35px;
   height: 35px;
 }
+.img-fluid{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 .header-bottom .menu-links a,
 .header-bottom .dropdown button {
   color: white;

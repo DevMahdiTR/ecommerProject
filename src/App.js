@@ -25,6 +25,7 @@ import Setting from "./pages/setting/setting";
 import Categories from "./pages/setting/categories";
 import Articles from "./pages/setting/articles";
 import Banner from "./pages/setting/banner";
+import Commands from "./pages/setting/commands";
 function App() {
   return (
     <>
@@ -54,7 +55,8 @@ function App() {
               <>
                 <Route path="categories" element={<Categories />}  />
                 <Route path="articles" element={<Articles />} />
-                <Route path="banner" element={<Banner />} />
+                <Route path="banners" element={<Banner />} />
+                <Route path="commands" element={<Commands />} />
               </>
             } >
 

@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {
     MenuFoldOutlined,
+    ShoppingCartOutlined,
     UploadOutlined,
     UserOutlined,
     VideoCameraOutlined,
@@ -26,10 +27,16 @@ const Setting = () => {
                     mode="inline"
                     defaultSelectedKeys={['/home']}>
                     <Menu.Item key="home" icon={<UserOutlined />}>
-                        <Link to="/setting/categories">Home</Link>
+                        <Link to="/setting/categories">Categories</Link>
                     </Menu.Item>
                     <Menu.Item key="aricles" icon={<UserOutlined />}>
-                        <Link to="/setting/articles">About</Link>
+                        <Link to="/setting/articles">Articles</Link>
+                    </Menu.Item>
+                    <Menu.Item key="banners" icon={<UserOutlined />}>
+                        <Link to="/setting/banners">Banners</Link>
+                    </Menu.Item>
+                    <Menu.Item key="commands" icon={<ShoppingCartOutlined />}>
+                        <Link to="/setting/commands">Commands</Link>
                     </Menu.Item>
                 </Menu>
             </Sider>

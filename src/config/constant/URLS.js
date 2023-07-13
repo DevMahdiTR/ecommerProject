@@ -9,7 +9,8 @@ export const  APIS = {
     },
     CATEGORIES: {
         getAndAddCategories : '/categories',
-        updateGetByIdDelete:(id)=> `/categories/${id}`
+        updateGetByIdDelete:(id)=> `/categories/${id}`,
+        getPublicCategories: '/public/categories'
     },
     ARTICLES : {
         getArticle: '/articles',

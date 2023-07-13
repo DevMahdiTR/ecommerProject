@@ -10,16 +10,15 @@ const Interceptor = axios.create({
 });
 
 // Config
-const TOKEN_PAYLOAD_KEY = "authorization";
+const TOKEN_PAYLOAD_KEY = "Authorization";
 const AUTH_TOKEN = localStorage.getItem('token')
 
 // API Request interceptor
 Interceptor.interceptors.request.use(
     (config) => {
         const jwtToken = AUTH_TOKEN || null;
-
         if (jwtToken) {
-            config.headers[TOKEN_PAYLOAD_KEY] = jwtToken;
+            config.headers[TOKEN_PAYLOAD_KEY] = `Bearer ${jwtToken}`;
         }
 
         return config;

@@ -9,6 +9,7 @@ import menu from "../images/menu.svg";
 import setting from "../images/setting.svg";
 import {logout} from "../service/login/AuthService";
 import contact from "../pages/Contact";
+import {getCategories, getPublicCategories} from "../service/categories/categoriesService";
 const Header = () => {
   const token = localStorage.getItem('token');
   const userData = JSON.parse(localStorage.getItem('user'));
@@ -32,6 +33,12 @@ const Header = () => {
     }
   }
   useEffect(()=>{
+    getPublicCategories().then(res => {
+      setCategories(res.data)
+    })
+  },[])
+
+  useEffect(()=>{
     getTitLe()
   },[token])
 
@@ -47,21 +54,10 @@ const Header = () => {
               </h2>
             </div>
             <div className="col-5">
-              {/*<div className="input-group">*/}
-              {/*  <input*/}
-              {/*    type="text"*/}
-              {/*    className="form-control py-2"*/}
-              {/*    placeholder="Search Product Here..."*/}
-              {/*    aria-label="Search Product Here..."*/}
-              {/*    aria-describedby="basic-addon2"*/}
-              {/*  />*/}
-              {/*  <span className="input-group-text p-3" id="basic-addon2">*/}
-              {/*     <BsSearch className="fs-6" />*/}
-              {/*  </span>*/}
-              {/*</div>*/}
             </div>
             <div className="col-5">
               <div className="header-upper-links d-flex align-items-center justify-content-between">
+                {userData?.role !== 'Admin' && (
                 <div>
                   <Link
                     to="/wishlist"
@@ -73,6 +69,7 @@ const Header = () => {
                     </p>
                   </Link>
                 </div>
+                )}
                 {userData?.role === 'Admin' && (
                     <div>
                       <div style={{cursor: "pointer"}} className="d-flex align-items-center gap-10 text-white">
@@ -95,18 +92,20 @@ const Header = () => {
                   </div>
 
                 </div>
-                <div>
-                  <Link
-                    to="/cart"
-                    className="d-flex align-items-center gap-10 text-white"
-                  >
-                    <img src={cart} alt="cart" />
-                    <div className="d-flex flex-column gap-10">
-                      <span className="badge bg-white text-dark">0</span>
-                      <p className="mb-0">$ 500</p>
+                {userData?.role !== 'Admin' && (
+                    <div>
+                      <Link
+                          to="/cart"
+                          className="d-flex align-items-center gap-10 text-white"
+                      >
+                        <img src={cart} alt="cart" />
+                        <div className="d-flex flex-column gap-10">
+                          <span className="badge bg-white text-dark">0</span>
+                          <p className="mb-0">$ 500</p>
+                        </div>
+                      </Link>
                     </div>
-                  </Link>
-                </div>
+                )}
               </div>
             </div>
           </div>
@@ -137,30 +136,15 @@ const Header = () => {
                             className="dropdown-menu"
                             aria-labelledby="dropdownMenuButton1"
                         >
-                          { categories.map((cat) => {
+                          { categories.map((cat, index) => {
                             return (
                                 <li>
-                                  <link className="dropdown-item text-white" to="">
+                                  <div className="dropdown-item text-white" key={index}>
                                     {cat.name}
-                                  </link>
+                                  </div>
                                 </li>
                             )
                           })}
-                          {/*<li>*/}
-                          {/*  <Link className="dropdown-item text-white" to="">*/}
-                          {/*    Action*/}
-                          {/*  </Link>*/}
-                          {/*</li>*/}
-                          {/*<li>*/}
-                          {/*  <Link className="dropdown-item text-white" to="">*/}
-                          {/*    Another action*/}
-                          {/*  </Link>*/}
-                          {/*</li>*/}
-                          {/*<li>*/}
-                          {/*  <Link className="dropdown-item text-white" to="">*/}
-                          {/*    Something else here*/}
-                          {/*  </Link>*/}
-                          {/*</li>*/}
                         </ul>
                       </div>
                     </div>
