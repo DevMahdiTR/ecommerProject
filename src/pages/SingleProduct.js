@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import ReactStars from "react-rating-stars-component";
 import BreadCrumb from "../components/BreadCrumb";
 import Meta from "../components/Meta";
@@ -7,19 +7,55 @@ import ReactImageZoom from "react-image-zoom";
 import Color from "../components/Color";
 import { TbGitCompare } from "react-icons/tb";
 import { AiOutlineHeart } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import {Link, useLocation } from "react-router-dom";
 import watch from "../images/watch.jpg";
 import Container from "../components/Container";
+import {getArticlesDetails, getArticlesPublic, getNewestArticles} from "../service/Articles/articlesServices";
+import {getPromotions} from "../service/promotions/promotionsService";
+import {getBanners} from "../service/banners/bannersService";
+import {addFav} from "../service/favories/favoriesService";
 const SingleProduct = () => {
-  const props = {
-    width: 594,
-    height: 600,
-    zoomWidth: 600,
 
-    img: "https://images.pexels.com/photos/190819/pexels-photo-190819.jpeg?cs=srgb&dl=pexels-fernando-arcos-190819.jpg&fm=jpg",
+  const location = useLocation();
+  const id = location.pathname.split("/")[2].split(":")[1];
+  const [singleProduct, setSingleProduct] = useState();
+  const[imgSize, setImgSize] = useState({imgHeight: 0, imgWidth: 0})
+  const [avg, setAvg] = useState(-1);
+  useEffect(() => {
+    getArticlesDetails(id).then(res => {
+      setSingleProduct(res.data)
+      //getData();
+    });
+  },[])
+
+  useEffect(() => {
+    if(singleProduct) {
+      setAvg(singleProduct?.reviews
+          .map((item, index) => item?.rate)
+          .reduce((a, b) => a + b, 0) / singleProduct?.reviews.length)
+    }
+  }, [singleProduct])
+
+  function getData() {
+    (singleProduct?.medias[0]?.url).onLoad = () => {
+      setImgSize({imgHeight: singleProduct?.medias[0]?.url.height, imgWidth: singleProduct?.medias[0]?.url.width})
+    }
+  }
+
+
+  const props = {
+    width: imgSize.imgWidth,
+    height: imgSize.imgHeight,
+    zoomWidth: 600,
+    img: (singleProduct?.medias[0]?.url)?
+        singleProduct?.medias[0]?.url
+        :
+        "https://images.pexels.com/photos/190819/pexels-photo-190819.jpeg?cs=srgb&dl=pexels-fernando-arcos-190819.jpg&fm=jpg",
   };
 
+
   const [orderedProduct, setorderedProduct] = useState(true);
+
   const copyToClipboard = (text) => {
     console.log("text", text);
     var textField = document.createElement("textarea");
@@ -43,54 +79,42 @@ const SingleProduct = () => {
               </div>
             </div>
             <div className="other-product-images d-flex flex-wrap gap-15">
-              <div>
-                <img
-                  src="https://images.pexels.com/photos/190819/pexels-photo-190819.jpeg?cs=srgb&dl=pexels-fernando-arcos-190819.jpg&fm=jpg"
-                  className="img-fluid"
-                  alt=""
-                />
-              </div>
-              <div>
-                <img
-                  src="https://images.pexels.com/photos/190819/pexels-photo-190819.jpeg?cs=srgb&dl=pexels-fernando-arcos-190819.jpg&fm=jpg"
-                  className="img-fluid"
-                  alt=""
-                />
-              </div>
-              <div>
-                <img
-                  src="https://images.pexels.com/photos/190819/pexels-photo-190819.jpeg?cs=srgb&dl=pexels-fernando-arcos-190819.jpg&fm=jpg"
-                  className="img-fluid"
-                  alt=""
-                />
-              </div>
-              <div>
-                <img
-                  src="https://images.pexels.com/photos/190819/pexels-photo-190819.jpeg?cs=srgb&dl=pexels-fernando-arcos-190819.jpg&fm=jpg"
-                  className="img-fluid"
-                  alt=""
-                />
-              </div>
+              {singleProduct?.medias.map((item, index) => {
+                  return (
+                      <div key={index}>
+                        <img
+                            src={item?.url}
+                            className="img-fluid"
+                            alt=""
+                        />
+                      </div>
+                  )}
+              )}
             </div>
           </div>
           <div className="col-6">
             <div className="main-product-details">
               <div className="border-bottom">
                 <h3 className="title">
-                  Kids Headphones Bulk 10 Pack Multi Colored For Students
+                    {singleProduct?.name}
                 </h3>
               </div>
               <div className="border-bottom py-3">
-                <p className="price">$ 100</p>
+                <p className="price">$ {singleProduct?.price} : {avg}</p>
                 <div className="d-flex align-items-center gap-10">
-                  <ReactStars
-                    count={5}
-                    size={24}
-                    value={4}
-                    edit={false}
-                    activeColor="#ffd700"
-                  />
-                  <p className="mb-0 t-review">( 2 Reviews )</p>
+                  {
+                    avg>0?
+                        <ReactStars
+                            count={5}
+                            size={24}
+                            value={avg}
+                            edit={false}
+                            activeColor="#ffd700"
+                        />
+                        :
+                        <></>
+                  }
+                  <p className="mb-0 t-review">( {singleProduct?.reviews.length} Reviews )</p>
                 </div>
                 <a className="review-btn" href="#review">
                   Write a Review
@@ -98,59 +122,22 @@ const SingleProduct = () => {
               </div>
               <div className=" py-3">
                 <div className="d-flex gap-10 align-items-center my-2">
-                  <h3 className="product-heading">Type :</h3>
-                  <p className="product-data">Watch</p>
+                  <h3 className="product-heading">Type : </h3>
+                  <p className="product-data">{singleProduct?.category?.name}</p>
                 </div>
                 <div className="d-flex gap-10 align-items-center my-2">
-                  <h3 className="product-heading">Brand :</h3>
-                  <p className="product-data">Havells</p>
+                  <h3 className="product-heading">Brand : </h3>
+                  <p className="product-data">{singleProduct?.slug}</p>
                 </div>
                 <div className="d-flex gap-10 align-items-center my-2">
-                  <h3 className="product-heading">Category :</h3>
-                  <p className="product-data">Watch</p>
+                  <h3 className="product-heading">Category : </h3>
+                  <p className="product-data">{singleProduct?.category?.name}</p>
                 </div>
                 <div className="d-flex gap-10 align-items-center my-2">
-                  <h3 className="product-heading">Tags :</h3>
-                  <p className="product-data">Watch</p>
-                </div>
-                <div className="d-flex gap-10 align-items-center my-2">
-                  <h3 className="product-heading">Availablity :</h3>
-                  <p className="product-data">In Stock</p>
-                </div>
-                <div className="d-flex gap-10 flex-column mt-2 mb-3">
-                  <h3 className="product-heading">Size :</h3>
-                  <div className="d-flex flex-wrap gap-15">
-                    <span className="badge border border-1 bg-white text-dark border-secondary">
-                      S
-                    </span>
-                    <span className="badge border border-1 bg-white text-dark border-secondary">
-                      M
-                    </span>
-                    <span className="badge border border-1 bg-white text-dark border-secondary">
-                      XL
-                    </span>
-                    <span className="badge border border-1 bg-white text-dark border-secondary">
-                      XXL
-                    </span>
-                  </div>
-                </div>
-                <div className="d-flex gap-10 flex-column mt-2 mb-3">
-                  <h3 className="product-heading">Color :</h3>
-                  <Color />
+                  <h3 className="product-heading">Availability : </h3>
+                  <p className="product-data">{singleProduct?.status}</p>
                 </div>
                 <div className="d-flex align-items-center gap-15 flex-row mt-2 mb-3">
-                  <h3 className="product-heading">Quantity :</h3>
-                  <div className="">
-                    <input
-                      type="number"
-                      name=""
-                      min={1}
-                      max={10}
-                      className="form-control"
-                      style={{ width: "70px" }}
-                      id=""
-                    />
-                  </div>
                   <div className="d-flex align-items-center gap-30 ms-5">
                     <button
                       className="button border-0"
@@ -165,12 +152,9 @@ const SingleProduct = () => {
                 </div>
                 <div className="d-flex align-items-center gap-15">
                   <div>
-                    <a href="">
-                      <TbGitCompare className="fs-5 me-2" /> Add to Compare
-                    </a>
-                  </div>
-                  <div>
-                    <a href="">
+                    <a href="" onClick={() =>
+                        addFav({'article_id': id})
+                            .then((res) => console.log(res))}>
                       <AiOutlineHeart className="fs-5 me-2" /> Add to Wishlist
                     </a>
                   </div>
@@ -207,10 +191,7 @@ const SingleProduct = () => {
             <h4>Description</h4>
             <div className="bg-white p-3">
               <p>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                Tenetur nisi similique illum aut perferendis voluptas, quisquam
-                obcaecati qui nobis officia. Voluptatibus in harum deleniti
-                labore maxime officia esse eos? Repellat?
+                {singleProduct?.description}
               </p>
             </div>
           </div>
@@ -311,7 +292,7 @@ const SingleProduct = () => {
         id="staticBackdrop"
         data-bs-backdrop="static"
         data-bs-keyboard="false"
-        tabindex="-1"
+        tabIndex="-1"
         aria-labelledby="staticBackdropLabel"
         aria-hidden="true"
       >

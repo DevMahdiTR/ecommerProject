@@ -5,21 +5,31 @@ import ProductCard from "../components/ProductCard";
 import SpecialProduct from "../components/SpecialProduct";
 import Container from "../components/Container";
 import {getPromotions} from "../service/promotions/promotionsService";
-import {getArticlesPublic} from "../service/Articles/articlesServices";
+import {getArticlesPublic, getNewestArticles} from "../service/Articles/articlesServices";
+import {getBanners} from "../service/banners/bannersService";
 
 const Home = () => {
 
   const [promotions, setPromotions] = useState([])
   const [articles, setArticles] = useState([])
-
+  const [banners, setBanners] = useState([])
+  const [newest, setNewest] = useState([])
   useEffect(() => {
         if(!promotions) getPromotions().then(
             res => setPromotions(res.data)
         )
     getArticlesPublic().then(
     res => {
-      setArticles(res.data.slice(0, 10))
+      setArticles(res.data)
     })
+    getBanners().then(
+        res => {
+          setBanners(res.data)
+        })
+    getNewestArticles(10).then(
+        res => {
+            setNewest(res.data)
+        })
   },[])
 
   return (
@@ -29,80 +39,38 @@ const Home = () => {
           <div className="col-6">
             <div className="main-banner position-relative">
               <img
-                src="../images/main-banner-1.jpg"
-                className="img-fluid rounded-3"
+                src={banners[0]?.url}
+                className="mainBanner rounded-3"
                 alt="main banner"
               />
-              <div className="main-banner-content position-absolute">
-                <h4>SUPERCHARGED FOR PROS.</h4>
-                <h5>iPad S13+ Pro.</h5>
-                <p>From $999.00 or $41.62/mo.</p>
-                <Link className="button" to="">BUY NOW</Link>
-              </div>
             </div>
           </div>
           <div className="col-6">
+              <div className="small-banner position-relative">
+                <img
+                  src={banners[1]?.url}
+                  width="48vw"
+                  className="screen rounded-3"
+                  alt="main banner"
+                />
+              </div>
             <div className="d-flex flex-wrap gap-10 justify-content-between align-items-center">
               <div className="small-banner position-relative">
                 <img
-                  src="../images/catbanner-01.jpg"
-                  className="img-fluid rounded-3"
+                  src={banners[2]?.url}
+                  className="secondaryBanner rounded-3"
                   alt="main banner"
                 />
-                <div className="small-banner-content position-absolute">
-                  {/*<h4>Best Sake</h4>*/}
-                  <h4>{promotions[0]?.title}</h4>
-                  {/*<h5>iPad S13+ Pro.</h5>*/}
-                  <h5>{promotions[0]?.products}</h5>
-                  <p>
-                    From $999.00 <br /> or $41.62/mo.
-                  </p>
-                </div>
-              </div>
-              <div className="small-banner position-relative">
-                <img
-                  src="../images/catbanner-02.jpg"
-                  className="img-fluid rounded-3"
-                  alt="main banner"
-                />
-                <div className="small-banner-content position-absolute">
-                  <h4>NEW ARRIVAL</h4>
-                  <h5>But IPad Air</h5>
-                  <p>
-                    From $999.00 <br /> or $41.62/mo.
-                  </p>
-                </div>
               </div>
               <div className="small-banner position-relative ">
                 <img
-                  src="../images/catbanner-03.jpg"
-                  className="img-fluid rounded-3"
+                  src={banners[3]?.url}
+                  className="secondaryBanner rounded-3"
                   alt="main banner"
                 />
-                <div className="small-banner-content position-absolute">
-                  <h4>NEW ARRIVAL</h4>
-                  <h5>But IPad Air</h5>
-                  <p>
-                    From $999.00 <br /> or $41.62/mo.
-                  </p>
-                </div>
               </div>
-              <div className="small-banner position-relative ">
-                <img
-                  src="../images/catbanner-04.jpg"
-                  className="img-fluid rounded-3"
-                  alt="main banner"
-                />
-                <div className="small-banner-content position-absolute">
-                  <h4>NEW ARRIVAL</h4>
-                  <h5>But IPad Air</h5>
-                  <p>
-                    From $999.00 <br /> or $41.62/mo.
-                  </p>
-                </div>
-              </div>
-            </div>
           </div>
+            </div>
         </div>
       </Container>
       <Container class1="home-wrapper-2 py-5">
@@ -114,7 +82,7 @@ const Home = () => {
                       <div className="d-flex gap align-items-center" key={index}>
                         <div>
                           <h6>{article.name}</h6>
-                          <p>`${article.quantity} Items`</p>
+                          <p>{article.quantity} Items</p>
                         </div>
                         <img src={article?.medias[0]?.url} alt={article.description} width={110} height={110} />
                       </div>
@@ -130,7 +98,6 @@ const Home = () => {
             <h3 className="section-heading">Featured Collection</h3>
           </div>
           {articles?.map((article, index) => {
-            console.log("in Home:", article)
             return (
                 <ProductCard featured={article} key={index}/>
                 )
@@ -224,10 +191,11 @@ const Home = () => {
           </div>
         </div>
         <div className="row">
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
+          {newest.map((item, index)=>{
+            return (
+                <ProductCard featured={item}  key={index}/>
+            )}
+          )}
         </div>
       </Container>
       <Container class1="marque-wrapper home-wrapper-2 py-5">

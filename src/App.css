@@ -86,6 +86,22 @@ a {
   height: 100%;
   object-fit: cover;
 }
+.mainBanner{
+  width: 48vw;
+  height: 37vw;
+  object-fit: cover;
+}
+.screen {
+  width: 47vw;
+  height: 18vw;
+  object-fit: cover;
+  margin-bottom:10px;
+}
+.secondaryBanner{
+    width: 23vw;
+    height: 18vw;
+  object-fit: cover;
+}
 .header-bottom .menu-links a,
 .header-bottom .dropdown button {
   color: white;

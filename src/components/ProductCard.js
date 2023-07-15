@@ -10,7 +10,6 @@ const ProductCard = (props) => {
   const grid = props.index;
   let location = useLocation();
   const {featured} = props;
-  console.log(featured)
   return (
     <>
       <div

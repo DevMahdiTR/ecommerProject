@@ -64,9 +64,12 @@ const Categories = () => {
 
     const getDAta =  async () => {
         try {
-            const fetchData = await getCategories()
-            setData(fetchData.data) }
-        catch (error) { console.log(error) }
+            const fetchData = await getCategories().then(
+                res =>{
+                    console.log(res.data);
+                   setData(res.data)
+                })
+        } catch (error) { console.log(error) }
     }
     const handleSubmit = (value)=>{
         if (currentItem.id){

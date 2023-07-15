@@ -46,9 +46,7 @@ const Header = () => {
         <div className="container-xxl">
           <div className="row align-items-center">
             <div className="col-2">
-              <h2>
                 <h1 className="text-white">Dev Corner</h1>
-              </h2>
             </div>
             <div className="col-5">
             </div>
@@ -135,8 +133,8 @@ const Header = () => {
                         >
                           { categories.map((cat, index) => {
                             return (
-                                <li>
-                                  <div className="dropdown-item text-white" key={index}>
+                                <li key={index}>
+                                  <div className="dropdown-item text-white">
                                     {cat.name}
                                   </div>
                                 </li>

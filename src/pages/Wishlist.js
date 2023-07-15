@@ -28,7 +28,7 @@ const Wishlist = () => {
                     <img
                         src="../images/cross.svg"
                         alt="cross"
-                        className="position-absolute cross img-fluid"
+                        className="position-absolute cross"
                     />
                     <div className="wishlist-card-image">
                       <img

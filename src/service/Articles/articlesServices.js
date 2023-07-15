@@ -34,3 +34,10 @@ export const getArticlesDetails = (id) => {
         url: BaseUrl + APIS.PUBLIC.articlesDetails(id)
     })
 }
+
+export const getNewestArticles = (limit) => {
+    return fetch({
+        method: 'get',
+        url: BaseUrl + APIS.PUBLIC.newestArticles(limit)
+    })
+}
