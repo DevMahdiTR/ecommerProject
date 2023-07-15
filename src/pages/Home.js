@@ -46,10 +46,9 @@ const Home = () => {
             </div>
           </div>
           <div className="col-6">
-              <div className="small-banner position-relative">
+              <div className=" position-relative">
                 <img
                   src={banners[1]?.url}
-                  width="48vw"
                   className="screen rounded-3"
                   alt="main banner"
                 />
@@ -84,7 +83,7 @@ const Home = () => {
                           <h6>{article.name}</h6>
                           <p>{article.quantity} Items</p>
                         </div>
-                        <img src={article?.medias[0]?.url} alt={article.description} width={110} height={110} />
+                        <img src={article?.medias[0]?.url} alt={article.description} className={'object-cover h-20 w-40'} />
                       </div>
                   )
               })}
