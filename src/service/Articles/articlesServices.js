@@ -8,14 +8,11 @@ export const getArticles = () => {
     })
 }
 
-export const addArticlePhoto = (image, article_id) => {
+export const addArticlePhoto = (data) => {
     return fetch({
         method: "post",
         url: BaseUrl+ APIS.ARTICLES.addPhotos,
-        data: {
-            image: image,
-            article_id: article_id
-        }
+        data
     })
 }
 export const addArticles = (data) => {

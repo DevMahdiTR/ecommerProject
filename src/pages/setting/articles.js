@@ -99,10 +99,16 @@ const Articles = () => {
         return formData;
     }
 const handleSubmit2 = (value) => {
-        let i = onImageUpload();
-        addArticlePhoto(i, article_id).then(r=>{
+    const formData = new FormData();
+    formData.append(
+        'image',
+        artImg,);
+    formData.append('article_id',article_id);
+    addArticlePhoto(formData).then(r=>{
             console.log(r.data)
-        })
+        setModalVisible(false);
+
+    })
 }
    const handleSubmit = (value)=>{
         console.log(value);
@@ -178,13 +184,13 @@ const handleSubmit2 = (value) => {
                 <br/>
                 { step === 0?
                 <Form form={form} onFinish={handleSubmit}  initialValues={currentItem}>
-                    <Form.Item name="name" label="Name" rules={[{required: true, min: 7, message: 'min length is 7'}]}>
+                    <Form.Item name="name" label="Name" rules={[{required: true}]}>
                         <Input/>
                     </Form.Item>
-                    <Form.Item name="price" label="price" rules={[{required: true, min: 2, message: 'min length is 2'}]}>
+                    <Form.Item name="price" label="price" rules={[{required: true}]}>
                         <Input/>
                     </Form.Item>
-                    <Form.Item name="description" label="description" rules={[{required: true, min: 10, message: 'min length is 10'}]}>
+                    <Form.Item name="description" label="description" rules={[{required: true}]}>
                         <Input/>
                     </Form.Item>
                     <Form.Item name="quantity" label="Quantity" rules={[{required: true}]}>

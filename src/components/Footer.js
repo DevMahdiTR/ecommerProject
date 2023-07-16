@@ -33,7 +33,7 @@ const Footer = () => {
       </footer>
       <footer className="py-4">
         <div className="container-xxl">
-          <div className="row">
+          <div className="row justify-center">
             <div className="col-4">
               <h4 className="text-white mb-4">Contact Us</h4>
               <div>
@@ -85,23 +85,6 @@ const Footer = () => {
                   Terms & Conditions
                 </Link>
                 <Link className="text-white py-2 mb-1">Blogs</Link>
-              </div>
-            </div>
-            <div className="col-3">
-              <h4 className="text-white mb-4">Account</h4>
-              <div className="footer-link d-flex flex-column">
-                <Link className="text-white py-2 mb-1">About Us</Link>
-                <Link className="text-white py-2 mb-1">Faq</Link>
-                <Link className="text-white py-2 mb-1">Contact</Link>
-              </div>
-            </div>
-            <div className="col-2">
-              <h4 className="text-white mb-4">Quick Links</h4>
-              <div className="footer-link d-flex flex-column">
-                <Link className="text-white py-2 mb-1">Laptops</Link>
-                <Link className="text-white py-2 mb-1">Headphones</Link>
-                <Link className="text-white py-2 mb-1">Tablets</Link>
-                <Link className="text-white py-2 mb-1">Watch</Link>
               </div>
             </div>
           </div>
