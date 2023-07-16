@@ -21,11 +21,10 @@ export const updateCategories = (data, id) => {
         data,
     })
 }
-export const deleteCategories = (data, id) => {
+export const deleteCategories = (id) => {
     return fetch({
-        method: "post",
-        url: BaseUrl+ APIS.CATEGORIES.updateGetByIdDelete(id),
-        data,
+        method: "delete",
+        url: BaseUrl+ APIS.CATEGORIES.updateGetByIdDelete(id)
     })
 }
 export const getCategoriesByID = (data, id) => {

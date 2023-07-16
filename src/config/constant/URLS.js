@@ -52,7 +52,9 @@ export const  APIS = {
         categoriesList: `/public/categories`,
         banners: `/public/banners`,
         reviews: `/public/reviews`,
+        articlesByCategories:  (id) => `/public/categories/${id}`,
         newestArticles: (limit) => `/articles/newest/${limit}`,
+
     }
 
 }
