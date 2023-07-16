@@ -15,6 +15,7 @@ export const  APIS = {
     ARTICLES : {
         getArticle: '/articles',
         addPhotos: '/medias',
+        addArticle: '/articles',
         getById:(id)=> `/articles/${id}`
     },
     USER : {

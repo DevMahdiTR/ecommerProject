@@ -21,6 +21,8 @@ const SingleProduct = () => {
   const [singleProduct, setSingleProduct] = useState();
   const[imgSize, setImgSize] = useState({imgHeight: 0, imgWidth: 0})
   const [avg, setAvg] = useState(-1);
+  const [review, setReview] = useState("");
+  const [rating, setRating] = useState(0);
   useEffect(() => {
     getArticlesDetails(id).then(res => {
       setSingleProduct(res.data)
@@ -100,7 +102,7 @@ const SingleProduct = () => {
                 </h3>
               </div>
               <div className="border-bottom py-3">
-                <p className="price">$ {singleProduct?.price} : {avg}</p>
+                <p className="price">$ {singleProduct?.price}</p>
                 <div className="d-flex align-items-center gap-10">
                   {
                     avg>0?
@@ -234,6 +236,7 @@ const SingleProduct = () => {
                       value={4}
                       edit={true}
                       activeColor="#ffd700"
+                        onChange={(e) => setRating(e)}
                     />
                   </div>
                   <div>
@@ -244,6 +247,7 @@ const SingleProduct = () => {
                       cols="30"
                       rows="4"
                       placeholder="Comments"
+                      onChange={(e) => setReview(e.target.value)}
                     ></textarea>
                   </div>
                   <div className="d-flex justify-content-end">

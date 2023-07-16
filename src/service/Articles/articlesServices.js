@@ -7,10 +7,21 @@ export const getArticles = () => {
         url: BaseUrl+ APIS.ARTICLES.getArticle,
     })
 }
-export const AddArticles = (data)=>{
+
+export const addArticlePhoto = (image, article_id) => {
     return fetch({
         method: "post",
         url: BaseUrl+ APIS.ARTICLES.addPhotos,
+        data: {
+            image: image,
+            article_id: article_id
+        }
+    })
+}
+export const addArticles = (data) => {
+    return fetch({
+        method: "post",
+        url: BaseUrl+ APIS.ARTICLES.addArticle,
         data
     })
 }
@@ -25,6 +36,12 @@ export const getArticlesPublic = () => {
     return fetch({
         method: 'get',
         url: BaseUrl + APIS.PUBLIC.articlesList
+    })
+}
+export const deleteArticles = (id) => {
+    return fetch({
+        method: 'delete',
+        url: BaseUrl + APIS.ARTICLES.getById(id)
     })
 }
 

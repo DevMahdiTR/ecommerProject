@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { Button,Form, Input, Modal, Table, Tabs} from "antd";
+import { Button,Form, Input, Modal, Table, Tabs, Steps} from "antd";
 
 import {
     addCategories,
@@ -7,7 +7,12 @@ import {
     getCategories,
     updateCategories
 } from "../../service/categories/categoriesService";
-import {getArticlesBuCategories} from "../../service/Articles/articlesServices";
+import {
+    addArticlePhoto,
+    addArticles,
+    deleteArticles,
+    getArticlesBuCategories
+} from "../../service/Articles/articlesServices";
 
 const Articles = () => {
     const [data, setData] = useState([]);
@@ -17,6 +22,9 @@ const Articles = () => {
     const [currentItem, setCurrentItem] = useState({});
     const [update, setUpdate] = useState(1)
     const [form] = Form.useForm();
+    const [step, setStep] = useState(0);
+    const [artImg, setArtImg] = useState('');
+    const [article_id, setArticle_id] = useState(null);
     const handleEdit = (record)=>{
         setCurrentItem(record);
         setUpdate(prevState => prevState+1)
@@ -64,10 +72,9 @@ const Articles = () => {
         }
     ]
 
-    const getDAta =  () => {
+    const getData =  () => {
          getCategories().then(
                 res =>{
-                    console.log(res.data);
                     setData(res.data)
                     setId(res.data[0].id)
                 })
@@ -77,30 +84,46 @@ const Articles = () => {
                 res =>{
                     setTableData(res.data.articles)
                     setId(res.data.id)
-                    console.log(res.data);
                 })
     }
 
-    const handleSubmit = (value)=>{
-        if (currentItem.id){
-            updateCategories(value, currentItem.id).then(r=>{
-                getDAta()
+    const onImageChange = (event) => {
+            setArtImg(event.target.files[0])
+    }
+    const onImageUpload = ()  => {
+        const formData = new FormData();
+        formData.append(
+            'image',
+            artImg,
+            artImg.name);
+        return formData;
+    }
+const handleSubmit2 = (value) => {
+        let i = onImageUpload();
+        addArticlePhoto(i, article_id).then(r=>{
+            console.log(r.data)
+        })
+}
+   const handleSubmit = (value)=>{
+        console.log(value);
+            addArticles({...value, 'category_id': id}).then(r=>{
+                console.log(r.data.id)
+                setArticle_id(r.data.id)
+                getData()
             })
-        }else{
-            addCategories(value).then(r=>{
-                getDAta()
-            })
-        }
-        setModalVisible(false);
+
+        setStep(1);
+        // setModalVisible(false);
         form.resetFields();
     }
+
     const handleDelete =(record)=>{
-        deleteCategories(record.id).then((res)=>{
-            getDAta()
+        deleteArticles(record.id).then((res)=>{
+            getData()
         })
     }
     useEffect(()=>{
-        getDAta()
+        getData()
     },[])
     useEffect(()=>{
         if (data.length > 0 ){
@@ -114,13 +137,14 @@ const Articles = () => {
                 onTabClick={(index)=> {
                     getArticles(index)
                 }}
-                items={data.map(item => {
+                items={data.map((item, index) => {
                     return {
+                        index: index,
                         label: `${item.name}`,
                         key: item.id,
                         children: <>
                             <Button type={'default'} className={'bg-sky-400 text-gray-50 border-0'}  onClick={()=>setModalVisible(true)}>
-                                Add New Articles
+                                Add New Article
                             </Button>
                             <br/>
                             <br/>
@@ -131,15 +155,28 @@ const Articles = () => {
             />
 
             <Modal
-                title={currentItem.id ? 'Edit Categorie' : 'Add Catgorie'}
-                visible={modalVisible}
+                title={currentItem.id ? 'Edit Article' : 'Add Article'}
+                open={modalVisible}
                 okType={"default"}
                 onCancel={()=>{
                     setModalVisible(false);
                     form.resetFields();
                 }}
-                onOk={()=>form.submit()}
+                onOk={()=> form.submit()}
             >
+                <Steps current={step} items={[
+                    {
+                        title: 'Add Article information',
+                        content: 'First-content',
+                    },
+                    {
+                        title: 'Add Article image',
+                        content: 'Second-content',
+                    }
+                ]}/>
+                <br/>
+                <br/>
+                { step === 0?
                 <Form form={form} onFinish={handleSubmit}  initialValues={currentItem}>
                     <Form.Item name="name" label="Name" rules={[{required: true, min: 7, message: 'min length is 7'}]}>
                         <Input/>
@@ -150,11 +187,17 @@ const Articles = () => {
                     <Form.Item name="description" label="description" rules={[{required: true, min: 10, message: 'min length is 10'}]}>
                         <Input/>
                     </Form.Item>
-                    <Form.Item name="owner" label="owner" rules={[{required: true, min: 4, message: 'min length is 4'}]}>
+                    <Form.Item name="quantity" label="Quantity" rules={[{required: true}]}>
                         <Input/>
                     </Form.Item>
-
                 </Form>
+            :
+                <Form form={form} onFinish={handleSubmit2}  initialValues={currentItem}>
+                    <Form.Item name="image" label="Image" rules={[{required: true, min: 7, message: 'min length is 7'}]}>
+                        <input value={artImg} type="file" onChange={onImageChange}/>
+                    </Form.Item>
+                </Form>
+            }
             </Modal>
 
         </div>

@@ -48,12 +48,18 @@ const Categories = () => {
             key: 'actions',
             render: (_,record)=>(
                 <div className={'flex gap-10'}>
-                    <Button className={'bg-green-400 text-gray-50 border-0'}   onClick={()=>{handleEdit(record)}}>Edit</Button>
-                    <Button className={'bg-red-400 text-gray-50 border-0'}  onClick={()=>{handleDelete(record)}}>Delete</Button>
+                    <Button
+                        className={'bg-green-400 text-gray-50 border-0'}
+                        onClick={()=>{handleEdit(record)}}>
+                        Edit
+                    </Button>
+                    <Button
+                        className={'bg-red-400 text-gray-50 border-0'}
+                        onClick={()=>{handleDelete(record)}}>
+                        Delete
+                    </Button>
                 </div>
             )
-
-
         }
     ]
 
