@@ -134,7 +134,9 @@ const Header = () => {
                           { categories.map((cat, index) => {
                             return (
                                 <li key={index}>
-                                  <div className="dropdown-item text-white">
+                                  <div
+                                      onClick={() => navigate(`/product?category=${cat.id}`)}
+                                      className="dropdown-item text-white">
                                     {cat.name}
                                   </div>
                                 </li>

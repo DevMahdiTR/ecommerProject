@@ -1,13 +1,37 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import BreadCrumb from "../components/BreadCrumb";
 import Meta from "../components/Meta";
 import ReactStars from "react-rating-stars-component";
 import ProductCard from "../components/ProductCard";
 import Color from "../components/Color";
 import Container from "../components/Container";
+import {getPublicCategories} from "../service/categories/categoriesService";
+import {getArticles, getArticlesBuCategories, getArticlesPublic} from "../service/Articles/articlesServices";
+import {useLocation} from "react-router-dom";
+
 
 const OurStore = () => {
   const [grid, setGrid] = useState(4);
+const [categories, setCategories] = useState([]);
+const [articles, setArticles] = useState([]);
+const params = new URLSearchParams(useLocation().search);
+console.log(params.get('category'))
+
+  useEffect(()=>{
+    getPublicCategories().then(res => {
+      setCategories(res.data)
+    })
+    if (params.get('category')){
+        getArticlesBuCategories(params.get('category')).then(res => {
+            setArticles(res.data.articles)
+        })
+    } else {
+      getArticlesPublic().then(res => {
+        setArticles(res.data)
+      })
+    }
+
+  },[])
   return (
     <>
       <Meta title={"Our Store"} />
@@ -19,10 +43,15 @@ const OurStore = () => {
               <h3 className="filter-title">Shop By Categories</h3>
               <div>
                 <ul className="ps-0">
-                  <li>Watch</li>
-                  <li>Tv</li>
-                  <li>Camera</li>
-                  <li>Laptop</li>
+                  {categories.map((item, index) => (
+                    <li
+                        onClick={() => {
+                          getArticlesBuCategories(item.id).then(res => {
+                            setArticles(res.data.articles)
+                            })
+                        }}
+                        key={index}>{item.name}</li>
+                    ))}
                 </ul>
               </div>
             </div>
@@ -36,10 +65,19 @@ const OurStore = () => {
                       className="form-check-input"
                       type="checkbox"
                       value=""
-                      id=""
+                      name="available"
+                      id="stock"
+                        onChange={(e) => {
+                            if (e.target.checked){
+                                setArticles(articles.filter(item => {return item.status=== 'IN STOCK'}))
+                            } else {
+                                getArticlesPublic().then(res => {
+                                    setArticles(res.data)
+                                })
+                            }}}
                     />
                     <label className="form-check-label" htmlFor="">
-                      In Stock (1)
+                      In Stock ({articles.filter(item => {return item.status=== 'IN STOCK'}).length})
                     </label>
                   </div>
                   <div className="form-check">
@@ -47,10 +85,19 @@ const OurStore = () => {
                       className="form-check-input"
                       type="checkbox"
                       value=""
-                      id=""
+                      name="available"
+                      id="stock"
+                      onChange={(e) => {
+                        if (e.target.checked){
+                          setArticles(articles.filter(item => {return item.status=== 'OUT OF STOCK'}))
+                      } else {
+                            getArticlesPublic().then(res => {
+                                setArticles(res.data)
+                            })
+                      }}}
                     />
                     <label className="form-check-label" htmlFor="">
-                      Out of Stock(0)
+                      Out of Stock({articles.filter(item => {return item.status=== 'OUT OF STOCK'}).length})
                     </label>
                   </div>
                 </div>
@@ -201,7 +248,7 @@ const OurStore = () => {
                   </select>
                 </div>
                 <div className="d-flex align-items-center gap-10">
-                  <p className="totalproducts mb-0">21 Products</p>
+                  <p className="totalproducts mb-0">{articles.length} Products</p>
                   <div className="d-flex gap-10 align-items-center grid">
                     <img
                       onClick={() => {
@@ -242,7 +289,9 @@ const OurStore = () => {
             </div>
             <div className="products-list pb-5">
               <div className="d-flex gap-10 flex-wrap">
-                <ProductCard grid={grid} />
+                {articles?.map((article, index) => (
+                  <ProductCard featured={article} key={index} grid={grid}/>
+                ))}
               </div>
             </div>
           </div>
