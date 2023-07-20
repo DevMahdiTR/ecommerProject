@@ -7,15 +7,22 @@ import { Link } from "react-router-dom";
 import Container from "../components/Container";
 import {DeleteFromUserCart, getUserCart, UpdateFromUserCart} from "../service/cart/cartService";
 import {CheckCircleOutlined} from "@ant-design/icons";
+import {Form, Input, Modal} from "antd";
+import {userCommand} from "../service/commands/commandsService";
 
 const Cart = () => {
   const [data, setData] = useState([])
   const [text, setText] = useState('')
+  const [modalVisible, setModalVisible] = useState(false);
+  const [form] = Form.useForm();
+  const [total, setTotal] = useState(0)
   const getData = () =>{
     getUserCart().then((res)=>{
       setData(res.data)
+      setTotal(res.data.reduce((acc, item)=>acc+item.article.price*item.quantity, 0))
     })
   }
+
   useEffect(()=>{
     getData()
   },[])
@@ -29,6 +36,20 @@ const Cart = () => {
         getData()
       })
   }
+  const handleCommand = (value) => {
+    console.log(value)
+        value = {
+            ...value,
+            total: total,
+        }
+        console.log(value)
+    userCommand(value).then(r=>{
+      console.log(r.data)
+      setModalVisible(false);
+      getData()
+    })
+  }
+
   return (
     <>
       <Meta title={"Cart"} />
@@ -44,9 +65,9 @@ const Cart = () => {
               <h4 className="cart-col-5">Action</h4>
             </div>
             {
-              data.map((item)=>{
+              data.map((item, index)=>{
                 return (
-                    <div className="cart-data py-3 mb-2 d-flex justify-content-between align-items-center">
+                    <div className="cart-data py-3 mb-2 d-flex justify-content-between align-items-center" key={index}>
                       <div className="cart-col-1 gap-15 d-flex align-items-center">
                         <div className="w-25">
                           <img src={item?.article?.medias[0].url} className="img-fluid" alt="product image" />
@@ -67,6 +88,7 @@ const Cart = () => {
                               max={100}
                               defaultValue={item.quantity}
                               onChange={(event)=>{setText(event.target.value)}}
+                              onBlur={() => handleEditQuantity(item)}
                           />
                         </div>
                         <div>
@@ -94,13 +116,36 @@ const Cart = () => {
                 Continue To Shopping
               </Link>
               <div className="d-flex flex-column align-items-end">
-                <h4>Total price: $ 1000</h4>
-                <Link to="/t" className="button mb-14 mt-8">
+                <h4>Total price: {total} DT</h4>
+                <button onClick={() => setModalVisible(true)} className="button mb-14 mt-8">
                   Commander
-                </Link>
+                </button>
               </div>
             </div>
           </div>
+          <Modal
+              title={"Command"}
+              open={modalVisible}
+              okType={"default"}
+              onCancel={()=>{
+                setModalVisible(false);
+                form.resetFields();
+              }}
+              onOk={()=>form.submit()}
+              okText={"Commander"}
+          >
+            <Form form={form} onFinish={handleCommand}>
+              <Form.Item name="adresse" label="Address" rules={[{required: true, message: 'Address is required'}]}>
+                <Input/>
+              </Form.Item>
+              <Form.Item name="telephone" label="Phone Number" rules={[{required: true, min: 8, message: 'min length is 2'}]}>
+                <Input/>
+              </Form.Item>
+              <Form.Item name="total" label="Total">
+               <p className="font-bold">{total} DT</p>
+              </Form.Item>
+            </Form>
+          </Modal>
         </div>
       </Container>
     </>

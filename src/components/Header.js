@@ -46,7 +46,7 @@ const Header = () => {
         <div className="container-xxl">
           <div className="row align-items-center">
             <div className="col-2">
-                <h1 className="text-white">Dev Corner</h1>
+                <img src={'logo clickk final.png'} className="w-20 h-12 "/>
             </div>
             <div className="col-5">
             </div>

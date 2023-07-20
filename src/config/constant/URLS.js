@@ -47,6 +47,11 @@ export const  APIS = {
         list: `/favories`,
         delete: (id) => `/favories/${id}`
     },
+    COMMAND: {
+            userCommand: `/commander`,
+            getCommands: `/commandes`,
+            adminGetCommands: `/admin/commandes`,
+        },
     PUBLIC: {
         articlesList:`/public/articles`,
         articlesDetails: (id) => `/public/articles/${id}/details`,
@@ -55,7 +60,6 @@ export const  APIS = {
         reviews: `/public/reviews`,
         articlesByCategories:  (id) => `/public/categories/${id}`,
         newestArticles: (limit) => `/articles/newest/${limit}`,
-
     }
 
 }
