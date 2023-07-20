@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import ReactStars from "react-rating-stars-component";
 import { Link, useLocation } from "react-router-dom";
 import prodcompare from "../images/prodcompare.svg";
@@ -10,6 +10,15 @@ const ProductCard = (props) => {
   const grid = props.index;
   let location = useLocation();
   const {featured} = props;
+  const [avg, setAvg] = useState(-1);
+  useEffect(() => {
+    if(featured) {
+      setAvg(featured?.reviews
+          .map((item, index) => item?.rate)
+          .reduce((a, b) => a + b, 0) / featured?.reviews.length)
+    }
+  }, [avg])
+
   return (
     <>
       <div
@@ -46,23 +55,25 @@ const ProductCard = (props) => {
             <h5 className="product-title">
               {featured?.name}
             </h5>
-            <ReactStars
-              count={5}
-              size={24}
-              value={4}
-              edit={false}
-              activeColor="#ffd700"
-            />
+            {
+              avg>0?
+                  <ReactStars
+                      count={5}
+                      size={24}
+                      value={avg}
+                      edit={false}
+                      activeColor="#ffd700"
+                  />
+                  :
+                  <></>
+            }
             <p className={`description ${grid === 12 ? "d-block" : "d-none"}`}>
                 {featured?.description}
             </p>
-            <p className="price">${featured?.price}</p>
+            <p className="price">{featured?.price} DT</p>
           </div>
           <div className="action-bar position-absolute">
             <div className="d-flex flex-column gap-15">
-              <button className="border-0 bg-transparent">
-                <img src={prodcompare} alt="compare" />
-              </button>
               <button className="border-0 bg-transparent">
                 <img src={view} alt="view" />
               </button>

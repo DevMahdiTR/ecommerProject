@@ -1,9 +1,20 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import ReactStars from "react-rating-stars-component";
 import { Link } from "react-router-dom";
 const SpecialProduct = (props) => {
 
-  const {name, status, description, price, quantity, medias} = props?.specials;
+  const {name, status, description, price, quantity, medias,reviews,promotion} = props?.specials;
+  const [avg, setAvg] = useState(-1);
+  const [newPrice, setNewPrice] = useState(-1);
+  useEffect(() => {
+    if(reviews) {
+      setAvg(reviews
+          .map((item, index) => item?.rate)
+          .reduce((a, b) => a + b, 0) / reviews.length)
+    }
+    setNewPrice(price - (price * promotion.value)/100)
+  }, [avg, price])
+
   return (
     <>
       <div className="col-6 mb-3">
@@ -18,15 +29,20 @@ const SpecialProduct = (props) => {
                 {description}
                 {/*Samsung Galaxy Note10+ Mobile Phone; Sim...*/}
               </h6>
-              <ReactStars
-                count={5}
-                size={24}
-                value={4}
-                edit={false}
-                activeColor="#ffd700"
-              />
+              {
+                avg>0?
+                    <ReactStars
+                        count={5}
+                        size={24}
+                        value={avg}
+                        edit={false}
+                        activeColor="#ffd700"
+                    />
+                    :
+                    <></>
+              }
               <p className="price">
-                <span className="red-p">{price} DT</span> &nbsp; <span>{status}</span>
+                <span className="line-through text-red-600">{price} DT </span> <span>&nbsp; &nbsp;{newPrice} DT</span>  <span>{status}</span>&nbsp;
               </p>
               {/*<div className="discount-till d-flex align-items-center gap-10">*/}
               {/*  <p className="mb-0">*/}
@@ -41,7 +57,7 @@ const SpecialProduct = (props) => {
               <div className="prod-count my-3">
                 <p>Products: {quantity}</p>
               </div>
-              <Link className="button" to="">Add to Cart</Link>
+              <Link className="button" >Add to Cart</Link>
             </div>
           </div>
         </div>

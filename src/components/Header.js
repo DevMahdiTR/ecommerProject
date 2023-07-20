@@ -94,10 +94,6 @@ const Header = () => {
                           className="d-flex align-items-center gap-10 text-white"
                       >
                         <img src={cart} alt="cart" />
-                        <div className="d-flex flex-column gap-10">
-                          <span className="badge bg-white text-dark">0</span>
-                          <p className="mb-0">$ 500</p>
-                        </div>
                       </Link>
                     </div>
                 )}

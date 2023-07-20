@@ -1,5 +1,5 @@
 import {APIS, BaseUrl} from "../../config/constant/URLS";
-import fetch from '../../config/interceptor'
+import fetch from '../../config/interceptor/interceptor'
 
 
 export const getAllReviews = () => {

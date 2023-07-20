@@ -26,6 +26,9 @@ import Categories from "./pages/setting/categories";
 import Articles from "./pages/setting/articles";
 import Banner from "./pages/setting/banner";
 import Commands from "./pages/setting/commands";
+import moment from 'moment';
+
+moment.locale('en');
 function App() {
   return (
     <>

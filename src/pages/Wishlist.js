@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import BreadCrumb from "../components/BreadCrumb";
 import Meta from "../components/Meta";
 import Container from "../components/Container";
-import {getFavList} from "../service/favories/favoriesService";
+import {deleteFav, getFavList} from "../service/favories/favoriesService";
 
 const Wishlist = () => {
   const [favs, setFavs] = useState([]);
@@ -14,6 +14,16 @@ const Wishlist = () => {
               console.log(res.data);
             }
         )},[])
+    const handleDelete = (id)=>{
+        deleteFav(id).then((r)=>{
+            getFavList().then(
+                res =>{
+                    setFavs(res.data)
+                    console.log(res.data);
+                }
+            )
+        })
+    }
 
   return (
     <>
@@ -28,11 +38,12 @@ const Wishlist = () => {
                     <img
                         src="../images/cross.svg"
                         alt="cross"
-                        className="position-absolute cross"
+                        className="position-absolute cross cursor-pointer"
+                        onClick={()=>handleDelete(fav?.id)}
                     />
                     <div className="wishlist-card-image">
                       <img
-                          src="../images/watch.jpg"
+                          src={fav?.article?.medias[0]?.url}
                           className="img-fluid w-100"
                           alt="watch"
                       />
@@ -47,6 +58,14 @@ const Wishlist = () => {
                 </div>
             )}
           )}
+            <div className="d-flex align-middle flex-wrap justify-center mt-8 h-20">
+                {favs.length === 0 && (
+                    <h5>
+                        No Favorite
+                    </h5>
+                )}
+            </div>
+
         </div>
       </Container>
     </>

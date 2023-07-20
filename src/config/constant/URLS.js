@@ -24,14 +24,13 @@ export const  APIS = {
     REVIEWS : {
         getAllReviews: `/reviews`,
         deleteReview: (id) => `/reviews/${id}`,
-        addReview: `/review`
+            addReview: `/reviews`
     },
     BANNERS : {
         addOrUpdate: `/banners`
     },
     PROMOTIONS : {
         add: `/promotions`,
-        update: `/promotions`,
         deactivate: (id) => `/promotions/${id}/updateStatus`,
         delete: (id) => `/promotions/${id}`
     },
@@ -40,7 +39,8 @@ export const  APIS = {
     },
     CART: {
         add: `/cart`,
-        list: `/cart`
+        list: `/cart`,
+        update: '/cart/article/quantity/update'
     },
     FAVORIES: {
         add: `/favories`,

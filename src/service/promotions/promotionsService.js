@@ -10,17 +10,11 @@ export const addPromotion = (data) => {
     })
 }
 
-export const updatePromotion = (data) => {
+export const deactivatePromotion = (id, data) => {
     return fetch({
         method: "post",
-        url: BaseUrl + APIS.PROMOTIONS.update,
+        url: BaseUrl + APIS.PROMOTIONS.deactivate(id),
         data
-    })
-}
-export const deactivatePromotion = (id) => {
-    return fetch({
-        method: "post",
-        url: BaseUrl + APIS.PROMOTIONS.deactivate(id)
     })
 }
 

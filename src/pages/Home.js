@@ -15,12 +15,10 @@ const Home = () => {
   const [banners, setBanners] = useState([])
   const [newest, setNewest] = useState([])
   useEffect(() => {
-        if(!promotions) getPromotions().then(
-            res => setPromotions(res.data)
-        )
     getArticlesPublic().then(
     res => {
-      setArticles(res.data)
+      setArticles(res.data.filter(v=>v?.promotion === null))
+      setPromotions(res.data.filter(v=>v?.promotion !== null))
     })
     getBanners().then(
         res => {
@@ -31,6 +29,7 @@ const Home = () => {
             setNewest(res.data)
         })
   },[])
+  console.log(promotions)
 
   return (
     <>
@@ -176,7 +175,7 @@ const Home = () => {
           </div>
         </div>
         <div className="row">
-          {articles.map((item)=>{
+          {promotions.map((item)=>{
             return (
                 <SpecialProduct specials={item}  />
             )
