@@ -47,8 +47,8 @@ const ProductCard = (props) => {
             </button>
           </div>
           <div className="product-image">
-            <img src={featured?.medias[0]?.url} className="img-fluid" alt="product image" />
-            <img src={featured?.medias[1]?.url} className="img-fluid" alt="product image" />
+            <img src={featured?.medias[0]?.url} className="object-cover h-56 w-96" alt="product image" />
+            <img src={featured?.medias[1]?.url} className="object-cover h-56 w-96" alt="product image" />
           </div>
           <div className="product-details">
             <h6 className="brand">{featured?.slug}</h6>
@@ -71,16 +71,6 @@ const ProductCard = (props) => {
                 {featured?.description}
             </p>
             <p className="price">{featured?.price} DT</p>
-          </div>
-          <div className="action-bar position-absolute">
-            <div className="d-flex flex-column gap-15">
-              <button className="border-0 bg-transparent">
-                <img src={view} alt="view" />
-              </button>
-              <button className="border-0 bg-transparent">
-                <img src={addcart} alt="addcart" />
-              </button>
-            </div>
           </div>
         </Link>
       </div>
