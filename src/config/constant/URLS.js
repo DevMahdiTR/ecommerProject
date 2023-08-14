@@ -1,4 +1,4 @@
-export const BaseUrl = 'http://127.0.0.1:8000/api'
+export const BaseUrl = 'https://api.click-and-shop.com/api'
 
 
 
@@ -51,6 +51,7 @@ export const  APIS = {
             userCommand: `/commander`,
             getCommands: `/commandes`,
             adminGetCommands: `/admin/commandes`,
+            deleteCommand:(id) => `/admin/commandes/${id}`,
         },
     PUBLIC: {
         articlesList:`/public/articles`,

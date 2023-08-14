@@ -7,6 +7,7 @@ import cart from "../images/cart.svg";
 import menu from "../images/menu.svg";
 import setting from "../images/setting.svg";
 import { getPublicCategories} from "../service/categories/categoriesService";
+import  ImageLogo from '../images/logoclickkfinal.png';
 const Header = () => {
   const token = localStorage.getItem('token');
   const userData = JSON.parse(localStorage.getItem('user'));
@@ -46,7 +47,7 @@ const Header = () => {
         <div className="container-xxl">
           <div className="row align-items-center">
             <div className="col-2">
-                <img src={'logo clickk final.png'} className="w-20 h-12 "/>
+                <img src={ImageLogo} onClick={()=>navigate('/')} className="w-20 h-12 cursor-pointer "/>
             </div>
             <div className="col-5">
             </div>
@@ -145,7 +146,9 @@ const Header = () => {
                       <div className="d-flex align-items-center gap-15">
                         <NavLink to="/">Home</NavLink>
                         <NavLink to="/product">Our Store</NavLink>
+{/*
                         <NavLink to="/contact">Contact</NavLink>
+*/}
                       </div>
                     </div>
                   </div>

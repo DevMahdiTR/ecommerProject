@@ -1,8 +1,18 @@
-import React from "react";
+import React, {useState} from "react";
 import { Link } from "react-router-dom";
 import { BsLinkedin, BsGithub, BsYoutube, BsInstagram } from "react-icons/bs";
 import newsletter from "../images/newsletter.png";
+import {addNewsLetter} from "../service/newsLetter/newsLetterService";
+import {notification} from "antd";
 const Footer = () => {
+  const [text , setText] = useState('');
+  const handleSubmit = ()=>{
+    addNewsLetter({email: text}).then(()=>{
+      notification.success({
+        message: "Vous êtes inscrit a notre newsslettre"
+      })
+    })
+  }
   return (
     <>
       <footer className="py-4">
@@ -22,8 +32,10 @@ const Footer = () => {
                   placeholder="Your Email Address"
                   aria-label="Your Email Address"
                   aria-describedby="basic-addon2"
+                  value={text}
+                  onChange={(e)=>{setText(e.target.value)}}
                 />
-                <span className="input-group-text p-2" id="basic-addon2">
+                <span onClick={handleSubmit}  className="input-group-text p-2 cursor-pointer" id="basic-addon2">
                   Subscribe
                 </span>
               </div>
@@ -38,8 +50,7 @@ const Footer = () => {
               <h4 className="text-white mb-4">Contact Us</h4>
               <div>
                 <address className="text-white fs-6">
-                  Hno : 277 Near Vill chopal, <br /> Sonipat, Haryana <br />
-                  PinCode: 131103
+                  kzema soussa
                 </address>
                 <a
                   href="tel:+91 8264954234"
@@ -53,7 +64,7 @@ const Footer = () => {
                 >
                   navdeepdahiya753@gmail.com
                 </a>
-                <div className="social_icons d-flex align-items-center gap-30 mt-4">
+                {/*<div className="social_icons d-flex align-items-center gap-30 mt-4">
                   <a className="text-white" href="#">
                     <BsLinkedin className="fs-4" />
                   </a>
@@ -66,13 +77,13 @@ const Footer = () => {
                   <a className="text-white" href="#">
                     <BsYoutube className="fs-4" />
                   </a>
-                </div>
+                </div>*/}
               </div>
             </div>
             <div className="col-3">
               <h4 className="text-white mb-4">Information</h4>
               <div className="footer-link d-flex flex-column">
-                <Link to="/privacy-policy" className="text-white py-2 mb-1">
+              {/*  <Link to="/privacy-policy" className="text-white py-2 mb-1">
                   Privacy Policy
                 </Link>
                 <Link to="/refund-policy" className="text-white py-2 mb-1">
@@ -80,11 +91,13 @@ const Footer = () => {
                 </Link>
                 <Link to="/shipping-policy" className="text-white py-2 mb-1">
                   Shipping Policy
-                </Link>
+                </Link>*/}
                 <Link to="/term-conditions" className="text-white py-2 mb-1">
                   Terms & Conditions
                 </Link>
+{/*
                 <Link className="text-white py-2 mb-1">Blogs</Link>
+*/}
               </div>
             </div>
           </div>
@@ -95,7 +108,7 @@ const Footer = () => {
           <div className="row">
             <div className="col-12">
               <p className="text-center mb-0 text-white">
-                &copy; {new Date().getFullYear()}; Powered by Developer's Corner
+                &copy; {new Date().getFullYear()}; Powered by Click shop
               </p>
             </div>
           </div>

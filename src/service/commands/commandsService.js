@@ -21,3 +21,9 @@ export const adminGetCommands = () => {
         url: BaseUrl + APIS.COMMAND.adminGetCommands
     })
 }
+export const adminDeleteCommands = (id) => {
+    return fetch({
+        method: 'delete',
+        url: BaseUrl + APIS.COMMAND.deleteCommand(id)
+    })
+}

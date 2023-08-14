@@ -29,7 +29,6 @@ const Home = () => {
             setNewest(res.data)
         })
   },[])
-  console.log(promotions)
 
   return (
     <>
@@ -103,7 +102,7 @@ const Home = () => {
         </div>
       </Container>
 
-      <Container class1="famous-wrapper py-5 home-wrapper-2">
+    {/*  <Container class1="famous-wrapper py-5 home-wrapper-2">
         <div className="row">
           <div className="col-3">
             <div className="famous-card position-relative">
@@ -166,7 +165,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-      </Container>
+      </Container>*/}
 
       <Container class1="special-wrapper py-5 home-wrapper-2">
         <div className="row">

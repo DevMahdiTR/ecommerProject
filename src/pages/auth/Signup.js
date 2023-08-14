@@ -5,6 +5,7 @@ import {useNavigate} from "react-router-dom";
 import Container from "../../components/Container";
 import CustomInput from "../../components/CustomInput";
 import {LoginService, RegisterService} from "../../service/login/AuthService";
+import {notification} from "antd";
 const Signup = () => {
   const navigate = useNavigate()
   const validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
@@ -23,9 +24,10 @@ const Signup = () => {
   const handleSubmit = (e)=>{
     e.preventDefault()
     RegisterService(data).then((res)=>{
-      localStorage.setItem('token', res.data.token)
-      localStorage.setItem('user', JSON.stringify(res.data.user))
-      navigate('/')
+      notification.success({
+        message: "votre compte a étè crée avec succès",
+      });
+      navigate('/login')
 
     }).catch((e)=>{
       console.log(e)

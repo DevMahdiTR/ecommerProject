@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Button, Form, Input, Modal, Table} from "antd";
-import {adminGetCommands} from "../../service/commands/commandsService";
+import {adminDeleteCommands, adminGetCommands} from "../../service/commands/commandsService";
 
 const Commands = () => {
     const [commands, setCommands] = useState([]);
@@ -10,6 +10,14 @@ const Commands = () => {
       })
     },[])
 
+    const handleDelete = (id)=>{
+        adminDeleteCommands(id).then((responce)=>{
+            adminGetCommands().then(res => {
+                setCommands(res.data)
+            })
+        })
+    }
+
     const columns = [
         {
             title:'Id',
@@ -17,9 +25,14 @@ const Commands = () => {
             key: 'id'
         },
         {
-            title:'User ID',
-            dataIndex: 'User_id',
-            key: 'user_id'
+            title:'Adresse',
+            dataIndex: 'adresse',
+            key: 'adresse'
+        },
+        {
+            title:'Telephone',
+            dataIndex: 'telephone',
+            key: 'telephone'
         },
         {
             title:'Total',
@@ -33,7 +46,7 @@ const Commands = () => {
                 <div className={'flex gap-10'}>
                     <Button
                         className={'bg-red-400 text-gray-50 border-0'}
-                        // onClick={()=>{handleDelete(record)}}
+                         onClick={()=>{handleDelete(record.id)}}
                         >
                         Delete
                     </Button>

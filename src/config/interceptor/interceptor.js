@@ -9,22 +9,20 @@ const Interceptor = axios.create({
     timeout: 60000,
 });
 
-// Config
-const TOKEN_PAYLOAD_KEY = "Authorization";
-const AUTH_TOKEN = localStorage.getItem('token')
 
 // API Request interceptor
 Interceptor.interceptors.request.use(
     (config) => {
-        const jwtToken = AUTH_TOKEN || null;
+        const jwtToken = localStorage.getItem('token') || null;
         if (jwtToken) {
-            config.headers[TOKEN_PAYLOAD_KEY] = `Bearer ${jwtToken}`;
+            config.headers['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
         }
 
         return config;
     },
     (error) => {
         // Do something with request error here
+        console.log(error)
         notification.error({
             message: "Error",
         });
@@ -42,6 +40,7 @@ Interceptor.interceptors.response.use(
         let notificationParam = {
             message: "",
         };
+        console.log(error)
 
         // Remove token and redirect
         if (unauthorizedCode.includes(error.response.status)) {

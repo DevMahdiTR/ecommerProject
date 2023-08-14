@@ -43,7 +43,7 @@ const Banner = () => {
         formData.append(
             'image',
             artImg,);
-        formData.append('type',currentItem.type);
+        formData.append('type',currentItem.type ? currentItem.type : `banner${(banners?.length+1).toString()}`);
         addOrUpdate(formData).then(r=>{
             console.log(r.data)
             setModalVisible(false);

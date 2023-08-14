@@ -1,4 +1,4 @@
-import fetch from '../../config/interceptor'
+import fetch from '../../config/interceptor/interceptor'
 import {BaseUrl, APIS} from "../../config/constant/URLS";
 
 export const addNewsLetter = (data) => {
