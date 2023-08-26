@@ -101,7 +101,7 @@ const SingleProduct = () => {
                 </h3>
               </div>
               <div className="border-bottom py-3">
-                <p className="price">$ {singleProduct?.price}</p>
+                <p className="price">{singleProduct?.price} DT</p>
                 <div className="d-flex align-items-center gap-10">
                   {
                     avg>0?
@@ -118,7 +118,7 @@ const SingleProduct = () => {
                   <p className="mb-0 t-review">( {singleProduct?.reviews?.length} Reviews )</p>
                 </div>
                 <a className="review-btn" href="#review">
-                  Write a Review
+                  Écrire une critique
                 </a>
               </div>
               <div className=" py-3">
@@ -127,15 +127,15 @@ const SingleProduct = () => {
                   <p className="product-data">{singleProduct?.category?.name}</p>
                 </div>
                 <div className="d-flex gap-10 align-items-center my-2">
-                  <h3 className="product-heading">Brand : </h3>
+                  <h3 className="product-heading">Marque : </h3>
                   <p className="product-data">{singleProduct?.slug}</p>
                 </div>
                 <div className="d-flex gap-10 align-items-center my-2">
-                  <h3 className="product-heading">Category : </h3>
+                  <h3 className="product-heading">Catégorie : </h3>
                   <p className="product-data">{singleProduct?.category?.name}</p>
                 </div>
                 <div className="d-flex gap-10 align-items-center my-2">
-                  <h3 className="product-heading">Availability : </h3>
+                  <h3 className="product-heading">Disponibilité : </h3>
                   <p className="product-data">{singleProduct?.status}</p>
                 </div>
                 <div className="d-flex align-items-center gap-15 flex-row mt-2 mb-3">
@@ -147,26 +147,18 @@ const SingleProduct = () => {
                       type="button"
                       onClick={handleAddToCard}
                     >
-                      Add to Cart
+                      Ajouter au panier
                     </button>
                   </div>
                 </div>
                 <div className="d-flex align-items-center gap-15">
                   <div>
-                    <a href="" onClick={() =>
+                    <a href="" className={'flex'} onClick={() =>
                         addFav({'article_id': id})
                             .then((res) => console.log(res))}>
-                      <AiOutlineHeart className="fs-5 me-2" /> Add to Wishlist
+                      <AiOutlineHeart className="fs-5 me-2" /> Ajouter à la liste de souhaits
                     </a>
                   </div>
-                </div>
-                <div className="d-flex gap-10 flex-column  my-3">
-                  <h3 className="product-heading">Shipping & Returns :</h3>
-                  <p className="product-data">
-                    Free shipping and returns available on all orders! <br /> We
-                    ship all US domestic orders within
-                    <b>5-10 business days!</b>
-                  </p>
                 </div>
               </div>
             </div>
@@ -188,11 +180,11 @@ const SingleProduct = () => {
       <Container class1="reviews-wrapper home-wrapper-2">
         <div className="row">
           <div className="col-12">
-            <h3 id="review">Reviews</h3>
+            <h3 id="review">Commentaires</h3>
             <div className="review-inner-wrapper">
               <div className="review-head d-flex justify-content-between align-items-end">
                 <div>
-                  <h4 className="mb-2">Customer Reviews</h4>
+                  <h4 className="mb-2">Avis des clients</h4>
                   <div className="d-flex align-items-center gap-10">
                     {avg > 0 && (
                         <ReactStars
@@ -203,7 +195,7 @@ const SingleProduct = () => {
                             activeColor="#ffd700"
                         />
                     )}
-                    <p className="mb-0">Based on {singleProduct  ? singleProduct?.reviews?.length : '0'} Reviews</p>
+                    <p className="mb-0">Baser sur {singleProduct  ? singleProduct?.reviews?.length : '0'} commentaires</p>
                   </div>
                 </div>
               </div>

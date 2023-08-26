@@ -27,6 +27,8 @@ import Articles from "./pages/setting/articles";
 import Banner from "./pages/setting/banner";
 import Commands from "./pages/setting/commands";
 import moment from 'moment';
+import SubCategories from "./pages/setting/sub-categories";
+import Loader from "./components/loader";
 
 moment.locale('en');
 function App() {
@@ -60,6 +62,7 @@ function App() {
                 <Route path="articles" element={<Articles />} />
                 <Route path="banners" element={<Banner />} />
                 <Route path="commands" element={<Commands />} />
+                <Route path="sousCategories" element={<SubCategories />} />
               </>
             } >
 
@@ -68,6 +71,7 @@ function App() {
           </Route>
         </Routes>
       </BrowserRouter>
+      <Loader/>
     </>
   );
 }

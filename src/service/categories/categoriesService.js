@@ -41,4 +41,10 @@ export const getPublicCategories = () => {
         url: BaseUrl+ APIS.CATEGORIES.getPublicCategories,
     })
 }
+export const getSousCategories = (id) => {
+    return fetch({
+        method: "get",
+        url: BaseUrl+ APIS.CATEGORIES.updateGetByIdDelete(id),
+    })
+}
 

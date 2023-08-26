@@ -5,6 +5,8 @@ import Meta from "../../components/Meta";
 import Container from "../../components/Container";
 import CustomInput from "../../components/CustomInput";
 import {LoginService} from "../../service/login/AuthService";
+import {useDispatch} from "react-redux";
+import {setLoader} from "../../redux/action/loaderAction";
 
 const Login = () => {
   const [data, setData] = useState({
@@ -18,7 +20,7 @@ const Login = () => {
   const handleChangePassword = (event)=>{
     setData({...data, password: event.target.value})
   }
-  const handleSubmit = (e)=>{
+  const handleSubmit =  (e)=>{
     e.preventDefault()
     LoginService(data).then((res)=>{
         localStorage.setItem('token', res.data.token)
@@ -50,7 +52,7 @@ const Login = () => {
                 <CustomInput
                   type="password"
                   name="password"
-                  placeholder="Password"
+                  placeholder="Mot de passe"
                   value={data.password}
                   onchangeValue={handleChangePassword}
                 />
@@ -60,7 +62,7 @@ const Login = () => {
                       Login
                     </button>
                     <Link to="/signup" className="button signup">
-                      SignUp
+                      S'inscrire
                     </Link>
                   </div>
                 </div>

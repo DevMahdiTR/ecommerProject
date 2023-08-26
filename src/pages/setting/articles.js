@@ -1,17 +1,17 @@
 import React, {useEffect, useState} from 'react';
-import {Button, Form, Input, Modal, Table, Tabs, Steps, DatePicker} from "antd";
+import {Button, Form, Input, Modal, Table, Tabs, Steps, DatePicker, Dropdown} from "antd";
 
 import {
     addCategories,
     deleteCategories,
-    getCategories,
+    getCategories, getSousCategories,
     updateCategories
 } from "../../service/categories/categoriesService";
 import {
     addArticlePhoto,
     addArticles,
     deleteArticles,
-    getArticlesBuCategories
+    getArticlesBuCategories, getArticlesBuCategoriesAdmin
 } from "../../service/Articles/articlesServices";
 import {addPromotion, deactivatePromotion, deletePromotion} from "../../service/promotions/promotionsService";
 import moment from 'moment'; // Import moment here
@@ -19,7 +19,7 @@ import moment from 'moment'; // Import moment here
 const Articles = () => {
     const [data, setData] = useState([]);
     const [tableData, setTableData] = useState([]);
-    const [id, setId] = useState(0);
+    const [id, setId] = useState(-1);
     const [modalVisible, setModalVisible] = useState(false);
     const [modalAddPhoto, setModalAddPhoto] = useState(false);
     const [modalPromotion, setModalPromotion] = useState(false);
@@ -28,7 +28,24 @@ const Articles = () => {
     const [form] = Form.useForm();
     const [step, setStep] = useState(0);
     const [artImg, setArtImg] = useState('');
+    const [subCategories, setSubCategories] = useState([]);
+    const [subCategoriesId, setSubCategoriesId] = useState([]);
+    useEffect(()=>{
+        getData()
+    },[])
+    useEffect(()=>{
+        if (subCategories.length > 0 ){
+            getArticles(subCategoriesId)
+        }
+    },[subCategoriesId])
+    useEffect(()=>{
+        if (id !== -1){
+           getSubCategories()
+        }
+    },[id])
+
     const [article_id, setArticle_id] = useState(null);
+
     const handleEdit = (record)=>{
         setCurrentItem(record);
         setUpdate(prevState => prevState+1)
@@ -116,15 +133,22 @@ const Articles = () => {
     const getData =  () => {
          getCategories().then(
                 res =>{
-                    setData(res.data)
-                    setId(res.data[0].id)
+                    setData(res.data.filter(item=>item.parent_id === null))
+                    setId(res.data.filter(item=>item.parent_id === null)[0].id)
+
                 })
     }
-    const getArticles =  (index) => {
-        getArticlesBuCategories(index).then(
+    const getSubCategories = ()=>{
+        getSousCategories(id).then((res)=>{
+             setSubCategories(res.data.sous_categories)
+            setSubCategoriesId(res?.data?.sous_categories[0]?.id)
+        })
+    }
+    const getArticles =  () => {
+        getArticlesBuCategoriesAdmin(subCategoriesId).then(
                 res =>{
+                    console.log(res)
                     setTableData(res.data.articles)
-                    setId(res.data.id)
                 })
     }
 
@@ -143,17 +167,21 @@ const handleSubmit2 = (value) => {
         artImg,);
     formData.append('article_id',article_id);
     addArticlePhoto(formData).then(r=>{
-            console.log(r.data)
         setModalAddPhoto(false);
 
 
     })
 }
    const handleSubmit = (value)=>{
-        console.log(value);
-            addArticles({...value, 'category_id': id}).then(r=>{
-                getData()
-                setModalVisible(false);
+            addArticles({...value, 'category_id': subCategoriesId}).then(r=>{
+                console.log(r)
+                getArticlesBuCategoriesAdmin(subCategoriesId).then(
+                    res =>{
+                        console.log(res)
+                        setTableData(res.data.articles)
+                        setModalVisible(false);
+
+                    })
 
             })
 
@@ -171,7 +199,6 @@ const handleSubmit2 = (value) => {
        })
            .then((res)=>{
                getData()
-           console.log(res)
        })
 
          setModalPromotion(false);
@@ -183,20 +210,23 @@ const handleSubmit2 = (value) => {
             getData()
         })
     }
-    useEffect(()=>{
-        getData()
-    },[])
-    useEffect(()=>{
-        if (data.length > 0 ){
-            getArticles(id)
+
+    const items = subCategories.map((item=>{
+        return {
+            key: item.id,
+            label: (
+                <a onClick={()=>{setSubCategoriesId(item.id)}}>
+                    {item.name}
+                </a>
+            ),
         }
-    },[data])
+    }))
     return (
         <div className={'ServiceContainer'}>
             <Tabs
                 tabPosition={'left'}
                 onTabClick={(index)=> {
-                    getArticles(index)
+                    setId(index)
                 }}
                 items={data.map((item, index) => {
                     return {
@@ -204,9 +234,12 @@ const handleSubmit2 = (value) => {
                         label: `${item.name}`,
                         key: item.id,
                         children: <>
-                            <Button type={'default'} className={'bg-sky-400 text-gray-50 border-0'}  onClick={()=>setModalVisible(true)}>
+                            <Button type={'default'} className={'bg-sky-400 text-gray-50 border-0 mr-9'}  onClick={()=>setModalVisible(true)}>
                                 Add New Article
                             </Button>
+                            <Dropdown menu={{ items }} placement="bottomRight" arrow>
+                                <Button>select sub categories</Button>
+                            </Dropdown>
                             <br/>
                             <br/>
                             <Table bordered={true} dataSource={tableData} columns={columns}/>
@@ -237,6 +270,18 @@ const handleSubmit2 = (value) => {
                         <Input/>
                     </Form.Item>
                     <Form.Item name="quantity" label="Quantity" rules={[{required: true}]}>
+                        <Input/>
+                    </Form.Item>
+                    <Form.Item name="quarter" label="3 Mounth" rules={[{required: true}]}>
+                        <Input/>
+                    </Form.Item>
+                    <Form.Item name="semester" label="6 Mounth" rules={[{required: true}]}>
+                        <Input/>
+                    </Form.Item>
+                    <Form.Item name="threequarter" label="9 Mounth" rules={[{required: true}]}>
+                        <Input/>
+                    </Form.Item>
+                    <Form.Item name="annual" label="12 Mounth" rules={[{required: true}]}>
                         <Input/>
                     </Form.Item>
                 </Form>

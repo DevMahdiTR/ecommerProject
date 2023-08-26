@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Button, Form, Input, Modal, Table} from "antd";
+import {Button, Dropdown, Form, Input, Modal, Table} from "antd";
 import {
     addCategories,
     deleteCategories,
@@ -67,7 +67,7 @@ const Categories = () => {
              getCategories().then(
                 res =>{
                     console.log(res.data);
-                   setData(res.data)
+                   setData(res.data.filter(item=>item.parent_id === null))
                 })
     }
     const handleSubmit = (value)=>{
@@ -94,11 +94,13 @@ const Categories = () => {
     },[])
 
 
+
     return (
         <div className={'ServiceContainer'}>
             <Button type={'default'} className={'bg-sky-400 text-gray-50 border-0'} onClick={()=>setModalVisible(true)}>
                 Add New Categories
             </Button>
+
             <br/>
             <br/>
             <Table bordered={true} dataSource={data} columns={columns}/>

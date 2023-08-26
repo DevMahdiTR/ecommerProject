@@ -58,9 +58,9 @@ const Cart = () => {
         <div className="row">
           <div className="col-12">
             <div className="cart-header py-3 d-flex justify-content-between align-items-center">
-              <h4 className="cart-col-1">Product</h4>
-              <h4 className="cart-col-2">Price</h4>
-              <h4 className="cart-col-3">Quantity</h4>
+              <h4 className="cart-col-1">Produit</h4>
+              <h4 className="cart-col-2">Prix</h4>
+              <h4 className="cart-col-3">Quantité</h4>
               <h4 className="cart-col-4">Total</h4>
               <h4 className="cart-col-5">Action</h4>
             </div>
@@ -113,7 +113,7 @@ const Cart = () => {
           <div className="col-12 py-2 mt-4">
             <div className="d-flex justify-content-between align-items-baseline">
               <Link to="/product" className="button">
-                Continue To Shopping
+                  Continuer vos achats
               </Link>
               <div className="d-flex flex-column align-items-end">
                 <h4>Total price: {total} DT</h4>
@@ -138,7 +138,7 @@ const Cart = () => {
               <Form.Item name="adresse" label="Address" rules={[{required: true, message: 'Address is required'}]}>
                 <Input/>
               </Form.Item>
-              <Form.Item name="telephone" label="Phone Number" rules={[{required: true, min: 8, message: 'min length is 2'}]}>
+              <Form.Item name="telephone" label="Numéro de téléphone" rules={[{required: true, min: 8, message: 'min length is 2'}]}>
                 <Input/>
               </Form.Item>
               <Form.Item name="total" label="Total">

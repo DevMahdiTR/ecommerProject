@@ -6,9 +6,13 @@ import Container from "../../components/Container";
 import CustomInput from "../../components/CustomInput";
 import {LoginService, RegisterService} from "../../service/login/AuthService";
 import {notification} from "antd";
+import {setLoader} from "../../redux/action/loaderAction";
+import {useDispatch} from "react-redux";
 const Signup = () => {
   const navigate = useNavigate()
   const validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+  const dispatch =useDispatch()
+
 
   const [data, setData] = useState({
     email: '',
@@ -22,14 +26,20 @@ const Signup = () => {
     c_password: '',
   });
   const handleSubmit = (e)=>{
+    dispatch(setLoader(true));
+
     e.preventDefault()
     RegisterService(data).then((res)=>{
       notification.success({
         message: "votre compte a étè crée avec succès",
       });
       navigate('/login')
+      dispatch(setLoader(false));
+
 
     }).catch((e)=>{
+      dispatch(setLoader(false));
+
       console.log(e)
     })
   }
@@ -76,7 +86,7 @@ const Signup = () => {
                 <CustomInput
                     type="text"
                     name="name"
-                    placeholder="Name"
+                    placeholder="Nom"
                     value={data.name}
                     onchangeValue={handleChangeName}
                 />
@@ -91,7 +101,7 @@ const Signup = () => {
                 <CustomInput
                   type="password"
                   name="mobile"
-                  placeholder="password"
+                  placeholder="Mot de passe"
                   value={data.password}
                   minValue={8}
                   onchangeValue={handleChangePassword}
@@ -100,7 +110,7 @@ const Signup = () => {
                 <CustomInput
                   type="password"
                   name="c_password"
-                  placeholder="Confirm Password"
+                  placeholder="Confirmer mot de passe"
                   value={data.c_password}
                   minValue={8}
                   onchangeValue={handleChangeConfirmPassword}
@@ -111,7 +121,7 @@ const Signup = () => {
                   <div className="mt-3 d-flex justify-content-center gap-15 align-items-center">
                     <button
                         disabled={!Object.values(error).every(value => value.length === 0) || !Object.values(data).every(value => value.length > 0)}
-                        className="button border-0" type={"submit"}>Sign Up</button>
+                        className="button border-0" type={"submit"}>S'inscrire</button>
                   </div>
                 </div>
               </form>

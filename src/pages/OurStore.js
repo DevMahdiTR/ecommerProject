@@ -8,28 +8,34 @@ import Container from "../components/Container";
 import {getPublicCategories} from "../service/categories/categoriesService";
 import {getArticles, getArticlesBuCategories, getArticlesPublic} from "../service/Articles/articlesServices";
 import {useLocation} from "react-router-dom";
+import {setLoader} from "../redux/action/loaderAction";
+import {useDispatch} from "react-redux";
 
 
 const OurStore = () => {
   const [grid, setGrid] = useState(4);
+  const dispatch =useDispatch()
 const [categories, setCategories] = useState([]);
 const [articles, setArticles] = useState([]);
 const params = new URLSearchParams(useLocation().search);
-console.log(params.get('category'))
+const  fetchData = async ()=>{
 
-  useEffect(()=>{
-    getPublicCategories().then(res => {
-      setCategories(res.data)
+    await getPublicCategories().then(res => {
+        setCategories(res.data)
     })
     if (params.get('category')){
-        getArticlesBuCategories(params.get('category')).then(res => {
+        await getArticlesBuCategories(params.get('category')).then(res => {
             setArticles(res.data.articles)
         })
     } else {
-      getArticlesPublic().then(res => {
-        setArticles(res.data)
-      })
+        await getArticlesPublic().then(res => {
+            setArticles(res.data)
+        })
     }
+}
+
+  useEffect( ()=>{
+    fetchData().then(r => console.log(r));
 
   },[])
   return (
@@ -40,10 +46,26 @@ console.log(params.get('category'))
         <div className="row">
           <div className="col-3">
             <div className="filter-card mb-3">
-              <h3 className="filter-title">Shop By Categories</h3>
+              <h3 className="filter-title">Acheter par catégories</h3>
               <div>
                 <ul className="ps-0">
-                  {categories.map((item, index) => (
+                  {categories.filter(v=>v.sous_categories.length > 0).map((item, index) => (
+                    <li
+                        onClick={() => {
+                          getArticlesBuCategories(item.id).then(res => {
+                            setArticles(res.data.articles)
+                            })
+                        }}
+                        key={index}>{item.name}</li>
+                    ))}
+                </ul>
+              </div>
+            </div>
+              <div className="filter-card mb-3">
+              <h3 className="filter-title">Acheter par sous catégories</h3>
+              <div>
+                <ul className="ps-0">
+                  {categories.filter(v=>v.parent_id !== null).map((item, index) => (
                     <li
                         onClick={() => {
                           getArticlesBuCategories(item.id).then(res => {

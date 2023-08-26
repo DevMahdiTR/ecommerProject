@@ -7,27 +7,33 @@ import Container from "../components/Container";
 import {getPromotions} from "../service/promotions/promotionsService";
 import {getArticlesPublic, getNewestArticles} from "../service/Articles/articlesServices";
 import {getBanners} from "../service/banners/bannersService";
+import {useDispatch} from "react-redux";
+import {setLoader} from "../redux/action/loaderAction";
 
 const Home = () => {
+  const dispatch = useDispatch();
 
   const [promotions, setPromotions] = useState([])
   const [articles, setArticles] = useState([])
   const [banners, setBanners] = useState([])
   const [newest, setNewest] = useState([])
-  useEffect(() => {
-    getArticlesPublic().then(
+  useEffect( () => {
+     getArticlesPublic().then(
     res => {
       setArticles(res.data.filter(v=>v?.promotion === null))
       setPromotions(res.data.filter(v=>v?.promotion !== null))
+
     })
-    getBanners().then(
+     getBanners().then(
         res => {
           setBanners(res.data)
         })
-    getNewestArticles(10).then(
+     getNewestArticles(10).then(
         res => {
             setNewest(res.data)
         })
+    dispatch(setLoader(false));
+
   },[])
 
   return (
@@ -92,7 +98,7 @@ const Home = () => {
       <Container class1="featured-wrapper py-5 home-wrapper-2">
         <div className="row">
           <div className="col-12">
-            <h3 className="section-heading">Featured Collection</h3>
+            <h3 className="section-heading">Collection en vedette</h3>
           </div>
           {articles?.map((article, index) => {
             return (
@@ -170,7 +176,7 @@ const Home = () => {
       <Container class1="special-wrapper py-5 home-wrapper-2">
         <div className="row">
           <div className="col-12">
-            <h3 className="section-heading">Special Products</h3>
+            <h3 className="section-heading">Produits speciaux</h3>
           </div>
         </div>
         <div className="row">
@@ -184,7 +190,7 @@ const Home = () => {
       <Container class1="popular-wrapper py-5 home-wrapper-2">
         <div className="row">
           <div className="col-12">
-            <h3 className="section-heading">Our Popular Products</h3>
+            <h3 className="section-heading">Nos produits populaires</h3>
           </div>
         </div>
         <div className="row">
@@ -201,16 +207,13 @@ const Home = () => {
             <div className="marquee-inner-wrapper card-wrapper">
               <Marquee className="d-flex">
                 <div className="mx-4 w-25">
-                  <img src="../images/brand-01.png" alt="brand" />
+                  <img src="../images/brand-01.png" className={'w-40'} alt="brand" />
                 </div>
                 <div className="mx-4 w-25">
-                  <img src="../images/brand-02.png" alt="brand" />
+                  <img src="../images/brand-03.png" className={'w-40'} alt="brand" />
                 </div>
-                <div className="mx-4 w-25">
-                  <img src="../images/brand-03.png" alt="brand" />
-                </div>
-                <div className="mx-4 w-25">
-                  <img src="../images/brand-04.png" alt="brand" />
+                  <div className="mx-4 w-25">
+                  <img src="../images/brand-04.png" className={'w-40'} alt="brand" />
                 </div>
                 <div className="mx-4 w-25">
                   <img src="../images/brand-05.png" alt="brand" />
@@ -221,8 +224,8 @@ const Home = () => {
                 <div className="mx-4 w-25">
                   <img src="../images/brand-07.png" alt="brand" />
                 </div>
-                <div className="mx-4 w-25">
-                  <img src="../images/brand-08.png" alt="brand" />
+                  <div className="mx-4 w-25">
+                  <img src="../images/img.png" alt="brand" />
                 </div>
               </Marquee>
             </div>

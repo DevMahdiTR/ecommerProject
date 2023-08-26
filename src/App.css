@@ -771,3 +771,6 @@ footer .input-group-text {
   color: var(--color-777777);
 }
 /* Shipping page ends here */
+.ant-spin .ant-spin-dot-item {
+  background-color: orange;
+}

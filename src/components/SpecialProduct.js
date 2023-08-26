@@ -1,11 +1,13 @@
 import React, {useEffect, useState} from "react";
 import ReactStars from "react-rating-stars-component";
-import { Link } from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
+import {Button} from "antd";
 const SpecialProduct = (props) => {
 
-  const {name, status, description, price, quantity, medias,reviews,promotion} = props?.specials;
+  const {id,name, status, description, price, quantity, medias,reviews,promotion} = props?.specials;
   const [avg, setAvg] = useState(-1);
   const [newPrice, setNewPrice] = useState(-1);
+  let location = useLocation();
   useEffect(() => {
     if(reviews) {
       setAvg(reviews
@@ -17,13 +19,13 @@ const SpecialProduct = (props) => {
 
   return (
     <>
-      <div className="col-6 mb-3">
+      <div className="col-6">
         <div className="special-product-card">
           <div className="d-flex">
             <div style={{width:"250px", height:"250px", marginRight:"10px"}}>
               <img src={medias[0]?.url} className="img-fluid" alt="watch"/>
             </div>
-            <div className="special-product-content">
+            <div className="special-product-content mt-8">
               <h5 className="brand">{name}</h5>
               <h6 className="title">
                 {description}
@@ -55,9 +57,18 @@ const SpecialProduct = (props) => {
               {/*  </div>*/}
               {/*</div>*/}
               <div className="prod-count my-3">
-                <p>Products: {quantity}</p>
+                <p>Quantité: {quantity}</p>
               </div>
-              <Link className="button" >Add to Cart</Link>
+              <Link
+                  to={`${
+                  location.pathname === "/"
+                      ? `/product/:${id}`
+                      : location.pathname === `/product/:${id}`
+                          ? `/product/:${id}`
+                          : `:${id}`
+              }`}
+                     clas className="button" >
+                Detail</Link>
             </div>
           </div>
         </div>

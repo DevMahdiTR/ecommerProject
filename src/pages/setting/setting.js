@@ -27,6 +27,9 @@ const Setting = () => {
                     <Menu.Item key="home" icon={<UserOutlined />}>
                         <Link to="/setting/categories">Categories</Link>
                     </Menu.Item>
+                    <Menu.Item key="souCategories" icon={<UserOutlined />}>
+                        <Link to="/setting/sousCategories">Sous categories</Link>
+                    </Menu.Item>
                     <Menu.Item key="aricles" icon={<UserOutlined />}>
                         <Link to="/setting/articles">Articles</Link>
                     </Menu.Item>

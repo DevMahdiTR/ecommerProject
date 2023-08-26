@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {NavLink, Link, useNavigate, useLocation} from "react-router-dom";
 
 import wishlist from "../images/wishlist.svg";
@@ -8,6 +8,7 @@ import menu from "../images/menu.svg";
 import setting from "../images/setting.svg";
 import { getPublicCategories} from "../service/categories/categoriesService";
 import  ImageLogo from '../images/logoclickkfinal.png';
+import {Menu} from "antd";
 const Header = () => {
   const token = localStorage.getItem('token');
   const userData = JSON.parse(localStorage.getItem('user'));
@@ -30,6 +31,14 @@ const Header = () => {
       return 'in'
     }
   }
+  function getItem(label, key, children, type) {
+    return {
+      key,
+      label,
+      children,
+      type,
+    };
+  }
   useEffect(()=>{
     getPublicCategories().then(res => {
       setCategories(res.data)
@@ -40,19 +49,27 @@ const Header = () => {
     getTitLe()
   },[token])
 
+  const Items = categories.filter(v=>v.sous_categories.length > 0).map((item)=>{
+    return (getItem(item.name, item.id , item.sous_categories.map((r)=>{
+      return (getItem(r.name, r.id))
+    })))
+
+
+  })
+const handleNavigate = ({key })=>{
+  navigate(`/product?category=${key}`)
+  }
 
   return (
-    <>
+    <div>
       <header className="header-upper py-3">
         <div className="container-xxl">
-          <div className="row align-items-center">
+          <div className="row align-items-center justify-between">
             <div className="col-2">
                 <img src={ImageLogo} onClick={()=>navigate('/')} className="w-20 h-12 cursor-pointer "/>
             </div>
-            <div className="col-5">
-            </div>
-            <div className="col-5">
-              <div className="header-upper-links d-flex align-items-center justify-content-between">
+            <div className="col-8">
+              <div className=" d-flex align-items-center justify-between">
                 {userData?.role !== 'Admin' && (
                 <div>
                   <Link
@@ -61,7 +78,7 @@ const Header = () => {
                   >
                     <img src={wishlist} alt="wishlist" />
                     <p className="mb-0">
-                      Favourite <br /> wishlist
+                      Favories
                     </p>
                   </Link>
                 </div>
@@ -74,7 +91,7 @@ const Header = () => {
                             className="d-flex align-items-center gap-10 text-white"
                         >
                           <img src={setting} alt="user" />
-                          <p className="mb-0">Setting</p>
+                          <p className="mb-0">Paramètre</p>
                         </Link>
 
                       </div>
@@ -120,32 +137,32 @@ const Header = () => {
                         >
                           <img src={menu} alt="" />
                           <span className="me-5 d-inline-block">
-                        Shop Categories
+                        Catégories de boutique
                       </span>
                         </button>
                         {/*categories*/}
+
                         <ul
                             className="dropdown-menu"
                             aria-labelledby="dropdownMenuButton1"
                         >
-                          { categories.map((cat, index) => {
-                            return (
-                                <li key={index}>
-                                  <div
-                                      onClick={() => navigate(`/product?category=${cat.id}`)}
-                                      className="dropdown-item text-white">
-                                    {cat.name}
-                                  </div>
-                                </li>
-                            )
-                          })}
+                          <Menu
+                              onClick={handleNavigate}
+                              style={{
+                               backgroundColor: '#232f3e',
+                                color: 'white'
+                              }}
+                              theme={'dark'}
+                              mode="vertical"
+                              items={Items}
+                          />
                         </ul>
                       </div>
                     </div>
                     <div className="menu-links">
                       <div className="d-flex align-items-center gap-15">
-                        <NavLink to="/">Home</NavLink>
-                        <NavLink to="/product">Our Store</NavLink>
+                        <NavLink to="/">Acceuil</NavLink>
+                        <NavLink to="/product">Notre magasin</NavLink>
 {/*
                         <NavLink to="/contact">Contact</NavLink>
 */}
@@ -158,7 +175,7 @@ const Header = () => {
           </header>
       )}
 
-    </>
+    </div>
   );
 };
 

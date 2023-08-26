@@ -60,6 +60,7 @@ export const  APIS = {
         banners: `/public/banners`,
         reviews: `/public/reviews`,
         articlesByCategories:  (id) => `/public/categories/${id}`,
+        articlesByCategoriesAdmin:  (id) => `/public/categories/${id}`,
         newestArticles: (limit) => `/articles/newest/${limit}`,
     }
 

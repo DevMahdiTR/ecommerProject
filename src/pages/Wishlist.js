@@ -61,7 +61,7 @@ const Wishlist = () => {
             <div className="d-flex align-middle flex-wrap justify-center mt-8 h-20">
                 {favs.length === 0 && (
                     <h5>
-                        No Favorite
+                        No Favorie
                     </h5>
                 )}
             </div>
