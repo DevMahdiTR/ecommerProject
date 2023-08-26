@@ -61,6 +61,7 @@ export const  APIS = {
         reviews: `/public/reviews`,
         articlesByCategories:  (id) => `/public/categories/${id}`,
         articlesByCategoriesAdmin:  (id) => `/public/categories/${id}`,
+        articlesByMainCategories:  (id) => `/public/articles/categories/main/${id}`,
         newestArticles: (limit) => `/articles/newest/${limit}`,
     }
 

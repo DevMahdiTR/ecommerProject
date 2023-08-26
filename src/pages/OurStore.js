@@ -6,7 +6,12 @@ import ProductCard from "../components/ProductCard";
 import Color from "../components/Color";
 import Container from "../components/Container";
 import {getPublicCategories} from "../service/categories/categoriesService";
-import {getArticles, getArticlesBuCategories, getArticlesPublic} from "../service/Articles/articlesServices";
+import {
+    getArticles,
+    getArticlesBuCategories,
+    getArticlesByMainCategories,
+    getArticlesPublic
+} from "../service/Articles/articlesServices";
 import {useLocation} from "react-router-dom";
 import {setLoader} from "../redux/action/loaderAction";
 import {useDispatch} from "react-redux";
@@ -16,6 +21,7 @@ const OurStore = () => {
   const [grid, setGrid] = useState(4);
   const dispatch =useDispatch()
 const [categories, setCategories] = useState([]);
+const [mainCategories, setMainCategories] = useState([]);
 const [articles, setArticles] = useState([]);
 const params = new URLSearchParams(useLocation().search);
 const  fetchData = async ()=>{
@@ -26,6 +32,9 @@ const  fetchData = async ()=>{
     if (params.get('category')){
         await getArticlesBuCategories(params.get('category')).then(res => {
             setArticles(res.data.articles)
+        })
+        await getArticlesByMainCategories(params.get('category')).then(res => {
+            setArticles(res.data)
         })
     } else {
         await getArticlesPublic().then(res => {
@@ -52,8 +61,8 @@ const  fetchData = async ()=>{
                   {categories.filter(v=>v.sous_categories.length > 0).map((item, index) => (
                     <li
                         onClick={() => {
-                          getArticlesBuCategories(item.id).then(res => {
-                            setArticles(res.data.articles)
+                          getArticlesByMainCategories(item.id).then(res => {
+                            setArticles(res.data)
                             })
                         }}
                         key={index}>{item.name}</li>

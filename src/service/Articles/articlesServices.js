@@ -67,3 +67,9 @@ export const getArticlesBuCategoriesAdmin = (id) => {
         url: BaseUrl + APIS.PUBLIC.articlesByCategoriesAdmin(id)
     })
 }
+export const getArticlesByMainCategories = (id) => {
+    return fetch({
+        method: 'get',
+        url: BaseUrl + APIS.PUBLIC.articlesByMainCategories(id)
+    })
+}

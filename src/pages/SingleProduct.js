@@ -138,6 +138,23 @@ const SingleProduct = () => {
                   <h3 className="product-heading">Disponibilité : </h3>
                   <p className="product-data">{singleProduct?.status}</p>
                 </div>
+                {singleProduct?.easy_payment && (
+                    <table style={{ width: '100%', borderCollapse: 'collapse', border: '2px solid #000', marginBottom: '20px' }}>
+                      <tr>
+                        <th style={{ border: '1px solid #000', backgroundColor: '#f2f2f2', padding: '8px' }}>3 Moins</th>
+                        <th style={{ border: '1px solid #000', backgroundColor: '#f2f2f2', padding: '8px' }}>6 Moins</th>
+                        <th style={{ border: '1px solid #000', backgroundColor: '#f2f2f2', padding: '8px' }}>9 Moins</th>
+                        <th style={{ border: '1px solid #000', backgroundColor: '#f2f2f2', padding: '8px' }}>12 Moins</th>
+                      </tr>
+                      <tr>
+                        <td style={{ border: '1px solid #000', backgroundColor: '#f2f2f2', padding: '8px' }}>{singleProduct?.easy_payment?.quarter}DT</td>
+                        <td style={{ border: '1px solid #000', backgroundColor: '#f2f2f2', padding: '8px' }}>{singleProduct?.easy_payment?.semester}DT</td>
+                        <td style={{ border: '1px solid #000', backgroundColor: '#f2f2f2', padding: '8px' }}>{singleProduct?.easy_payment?.threequarter}DT</td>
+                        <td style={{ border: '1px solid #000', backgroundColor: '#f2f2f2', padding: '8px' }}>{singleProduct?.easy_payment?.annual}DT</td>
+                      </tr>
+                    </table>
+
+                )}
                 <div className="d-flex align-items-center gap-15 flex-row mt-2 mb-3">
                   <div className="d-flex align-items-center gap-30 ms-5">
                     <button
